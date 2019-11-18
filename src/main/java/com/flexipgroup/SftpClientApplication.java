@@ -1,4 +1,4 @@
-package ng.com.helloworld;
+package com.flexipgroup;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
