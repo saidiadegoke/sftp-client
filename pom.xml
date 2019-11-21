@@ -36,6 +36,28 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/org.apache.commons.codec -->
+		<!--dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>org.apache.commons.codec</artifactId>
+		    <version>1.3.0-20081006</version>
+		</dependency-->
+		
+		<!-- https://mvnrepository.com/artifact/org.eclipse.maven/org.apache.commons.codec -->
+
+		<dependency>
+		    <groupId>org.ini4j</groupId>
+		    <artifactId>ini4j</artifactId>
+		    <version>0.5.4</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		</dependency>
+		
+		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
