@@ -1,6 +1,8 @@
 package com.flexipgroup.app;
 
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.app.log.FileLogger;
+import com.flexipgroup.app.service.FileManager;
 
 public class Application {
 
@@ -30,7 +32,11 @@ public class Application {
 			 * 2. Call its run() method
 			 * 
 			 */
-			System.out.println("Watch file changes on FileObserver");
+			 FileLogger Logger = new FileLogger();
+			 FileManager manage = new FileManager();
+			 //manage.moveFile( , destinationFile);
+			 
+			 Logger.log("Watch file changes on FileObserver","error" );
 			try {
 				Thread.sleep(config.MAIN_POLL_INTERVAL);
 			} catch (InterruptedException e) {

@@ -28,6 +28,8 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
+import com.flexipgroup.app.config.ConfigurationFile;
+
 /**
  * 
  * TODO
@@ -38,23 +40,15 @@ import org.apache.commons.codec.binary.Hex;
 
 public class Crypto
 {
-    String mPassword = null;
-    public final static int SALT_LEN = 8;
-    byte [] mInitVec = null;
-    byte [] mSalt = null;
-    Cipher mEcipher = null;
-    Cipher mDecipher = null;
-    private final int KEYLEN_BITS = 128; // see notes below where this is used.
-    private final int ITERATIONS = 65536;
-    private final int MAX_FILE_BUF = 1024;
-
+	ConfigurationFile config = new ConfigurationFile();
     /**
      * create an object with just the passphrase from the user. Don't do anything else yet 
      * @param password
      */
     public Crypto (String password)
     {
-        mPassword = password;
+		ConfigurationFile config = new ConfigurationFile();
+        config.mPassword = password;
     }
 
     /**
@@ -63,7 +57,7 @@ public class Crypto
      */
     public byte [] getSalt ()
     {
-        return (mSalt);
+        return (config.mSalt);
     }
 
     /**
@@ -72,7 +66,7 @@ public class Crypto
      */
     public byte [] getInitVec ()
     {
-        return (mInitVec);
+        return (config.mInitVec);
     }
 
     /**
@@ -113,10 +107,10 @@ public class Crypto
         SecretKey tmp = null;
 
         // crate secureRandom salt and store  as member var for later use
-         mSalt = new byte [SALT_LEN];
+         config.mSalt = new byte [config.SALT_LEN];
         SecureRandom rnd = new SecureRandom ();
-        rnd.nextBytes (mSalt);
-        Db ("generated salt :" + Hex.encodeHexString (mSalt));
+        rnd.nextBytes (config.mSalt);
+        Db ("generated salt :" + Hex.encodeHexString (config.mSalt));
 
         factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 
@@ -126,20 +120,20 @@ public class Crypto
          * The end user must also install them (not compiled in) so beware. 
          * see here:  http://www.javamex.com/tutorials/cryptography/unrestricted_policy_files.shtml
          */
-        KeySpec spec = new PBEKeySpec (mPassword.toCharArray (), mSalt, ITERATIONS, KEYLEN_BITS);
+        KeySpec spec = new PBEKeySpec (config.mPassword.toCharArray (), config.mSalt, config.ITERATIONS, config.KEYLEN_BITS);
         tmp = factory.generateSecret (spec);
         SecretKey secret = new SecretKeySpec (tmp.getEncoded(), "AES");
 
         /* Create the Encryption cipher object and store as a member variable
          */
-        mEcipher = Cipher.getInstance ("AES/CBC/PKCS5Padding");
-        mEcipher.init (Cipher.ENCRYPT_MODE, secret);
-        AlgorithmParameters params = mEcipher.getParameters ();
+        config.mEcipher = Cipher.getInstance ("AES/CBC/PKCS5Padding");
+        config.mEcipher.init (Cipher.ENCRYPT_MODE, secret);
+        AlgorithmParameters params = config.mEcipher.getParameters ();
 
         // get the initialization vectory and store as member var 
-        mInitVec = params.getParameterSpec (IvParameterSpec.class).getIV();
+        config.mInitVec = params.getParameterSpec (IvParameterSpec.class).getIV();
 
-        Db ("mInitVec is :" + Hex.encodeHexString (mInitVec));
+        Db ("mInitVec is :" + Hex.encodeHexString (config.mInitVec));
     }
 
 
@@ -170,12 +164,12 @@ public class Crypto
         SecretKey secret = null;
 
         // since we pass it as a string of input, convert to a actual byte buffer here
-        mSalt = Hex.decodeHex (salt.toCharArray ());
-       Db ("got salt " + Hex.encodeHexString (mSalt));
+        config.mSalt = Hex.decodeHex (salt.toCharArray ());
+       Db ("got salt " + Hex.encodeHexString (config.mSalt));
 
         // get initialization vector from passed string
-        mInitVec = Hex.decodeHex (initvec.toCharArray ());
-        Db ("got initvector :" + Hex.encodeHexString (mInitVec));
+        config.mInitVec = Hex.decodeHex (initvec.toCharArray ());
+        Db ("got initvector :" + Hex.encodeHexString (config.mInitVec));
 
 
         /* Derive the key, given password and salt. */
@@ -184,14 +178,14 @@ public class Crypto
         // see here: 
       // http://www.javamex.com/tutorials/cryptography/unrestricted_policy_files.shtml
         factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        KeySpec spec = new PBEKeySpec(mPassword.toCharArray (), mSalt, ITERATIONS, KEYLEN_BITS);
+        KeySpec spec = new PBEKeySpec(config.mPassword.toCharArray (), config.mSalt, config.ITERATIONS, config.KEYLEN_BITS);
 
         tmp = factory.generateSecret(spec);
         secret = new SecretKeySpec(tmp.getEncoded(), "AES");
 
         /* Decrypt the message, given derived key and initialization vector. */
-        mDecipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        mDecipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(mInitVec));
+        config.mDecipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        config.mDecipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(config.mInitVec));
     }
 
 
@@ -217,7 +211,7 @@ public class Crypto
         FileOutputStream fout;
         long totalread = 0;
         int nread = 0;
-        byte [] inbuf = new byte [MAX_FILE_BUF];
+        byte [] inbuf = new byte [config.MAX_FILE_BUF];
 
         fout = new FileOutputStream (output);
         fin = new FileInputStream (input);
@@ -234,7 +228,7 @@ public class Crypto
                 trimbuf[i] = inbuf[i];
 
             // encrypt the buffer using the cipher obtained previosly
-            byte [] tmp = mEcipher.update (trimbuf);
+            byte [] tmp = config.mEcipher.update (trimbuf);
 
             // I don't think this should happen, but just in case..
             if (tmp != null)
@@ -242,7 +236,7 @@ public class Crypto
         }
 
         // finalize the encryption since we've done it in blocks of MAX_FILE_BUF
-        byte [] finalbuf = mEcipher.doFinal ();
+        byte [] finalbuf = config.mEcipher.doFinal ();
         if (finalbuf != null)
             fout.write (finalbuf);
 
@@ -277,13 +271,13 @@ public class Crypto
         CipherInputStream cin;
         long totalread = 0;
         int nread = 0;
-        byte [] inbuf = new byte [MAX_FILE_BUF];
+        byte [] inbuf = new byte [config.MAX_FILE_BUF];
 
         fout = new FileOutputStream (output);
         fin = new FileInputStream (input);
 
         // creating a decoding stream from the FileInputStream above using the cipher created from setupDecrypt()
-        cin = new CipherInputStream (fin, mDecipher);
+        cin = new CipherInputStream (fin, config.mDecipher);
 
         while ((nread = cin.read (inbuf)) > 0 )
         {
