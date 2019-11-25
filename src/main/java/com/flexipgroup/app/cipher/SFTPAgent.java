@@ -26,9 +26,11 @@ public class SFTPAgent {
 	
 	
 	
-	public static ChannelSftp connect(String host,String username, String password) throws JSchException {
+	public static ChannelSftp connect(String host,String username, String password) throws Exception {
 		
 		String knownHosts = System.getProperty("user.home") + File.separator + ".ssh/known_hosts";
+		
+		RegisterKnownHosts.getInstance(host);
 		
 		JSch jsch = new JSch();
 		jsch.setKnownHosts(knownHosts);
@@ -37,6 +39,7 @@ public class SFTPAgent {
 		session.setPassword(password);
 		
 		session.connect();
+		
 		System.out.println(session.isConnected());
 
 		return (ChannelSftp) session.openChannel("sftp");		
