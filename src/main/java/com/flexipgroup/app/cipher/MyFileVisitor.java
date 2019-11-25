@@ -27,7 +27,9 @@ public class MyFileVisitor implements FileVisitor<Path>
 			System.out.println("toString : "+ file.toString());
 			System.out.println("substring :" + file.toString().substring(29));			
 			ufc.add(file.toString());
-			ufnc.add(file.toString().substring(29));			
+			ufnc.add(file.toString().substring(29));
+			System.out.println("FILE SIZE : "+ufc.getAll().size());
+			System.out.println("FILE NAME SIZE : "+ufnc.getAll().size());
 		}
 		return FileVisitResult.CONTINUE;
 	}

@@ -10,7 +10,7 @@ public class UploadFileNameCollection {
 	
 	private static Set<String> uploadFileName = new TreeSet<String>();
 	
-	private static List<String> uploadFileNameList = new ArrayList<String>();
+	private static Set<String> uploadFileNameList = new TreeSet<String>();
 	
 	
 	public void add(String e) {
@@ -22,29 +22,27 @@ public class UploadFileNameCollection {
 		add(e);	
 	}
 
-	public static String get(int e) {
-		
-		return getList().get(e);
-	}
-	
-	public static List<String>getList()
-	{
-		Iterator<String> i = uploadFileName.iterator();
-		
+	public static String get(int e) 
+	{	
+		List<String> getFile  = new ArrayList<String>();
+		Iterator<String> i = uploadFileName.iterator();	
 		while(i.hasNext())
 		{
-			uploadFileNameList.add(i.next());
+			getFile.add(i.next());
 		}
-		return uploadFileNameList;
+		return getFile.get(e);
 	}
-	
 	
 	public static Set<String> getAll() {
 		return uploadFileName;
 	}
 
-	public void delete(String e) {
+	public static void delete(String e) {
 		uploadFileName.remove(e);
+	}
+	
+	public static void deleteAll() {
+		uploadFileName.clear();
 	}
 
 }

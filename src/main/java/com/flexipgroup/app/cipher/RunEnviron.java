@@ -30,9 +30,7 @@ public class RunEnviron {
 		
 		}
 		
-		SendMoveDelete.getInstance(UploadFileNameCollection.getList(), 
-				path+ini.get("polling", "upload"), 
-				path+ini.get("polling", "uploaded"));
+		SendMoveDelete.getInstance(path+ini.get("polling", "upload"),path+ini.get("polling", "uploaded"));
 		
 	}
 	
@@ -74,8 +72,7 @@ public class RunEnviron {
 				{				
 					Thread.sleep(5000);
 					System.out.println("Status : File Listening started");
-					new FileObserver();
-					
+					new FileObserver();					
 				}catch(InterruptedException ie)
 				{
 					
@@ -92,15 +89,16 @@ public class RunEnviron {
 				{
 					while(true)
 					{
-						Thread.sleep(5000);					
+							
+						
 						if(UploadFilesCollection.getAll().isEmpty())
 						{
-							System.out.println("Status : ...Waiting to send file"+UploadFilesCollection.getAll().size());
+							System.out.println("Status : ...Waiting to send file");
 						}
 						else {
-							System.out.println("UPLOAD FILE SIZE : "+UploadFilesCollection.getAll().size());
-							break;
-						}						
+							runsend(ini,sftp,ufc,ufnc);
+						}
+						Thread.sleep(5000);
 					}										
 				}catch(InterruptedException ie)
 				{
@@ -110,12 +108,10 @@ public class RunEnviron {
 					System.out.println("empty array");
 				}
 
-				runsend(ini,sftp,ufc,ufnc);
+//				runsend(ini,sftp,ufc,ufnc);
 				
 			}
 		};
-		
-		
 		
 		t1.setName("CONNECTION");
 		t2.setName("LISTENER");

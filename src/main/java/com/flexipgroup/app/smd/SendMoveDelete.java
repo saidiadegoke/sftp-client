@@ -1,8 +1,9 @@
 package com.flexipgroup.app.smd;
 
-import java.util.List;
+import java.util.Set;
 
 import com.flexipgroup.app.cipher.CopyFileToUploaded;
+import com.flexipgroup.app.cipher.UploadFileNameCollection;
 
 public class SendMoveDelete {
 	
@@ -26,49 +27,35 @@ public class SendMoveDelete {
 		return deleteNotification;
 	}
 	
-	private SendMoveDelete(List<String> uploadfileNameCollection,String uploadfileLocation,String uploadedLocation) {
+	private SendMoveDelete(String uploadfileLocation,String uploadedLocation) {
 		
-		sendMoveDelete(uploadfileNameCollection,uploadfileLocation,uploadedLocation);
+		sendMoveDelete(uploadfileLocation,uploadedLocation);
 	}
 	
 	private SendMoveDelete() {}
 	
 	
-	public static SendMoveDelete getInstance(List<String> uploadfileNameCollection,String uploadfileLocation,String uploadedLocation)
+	public static SendMoveDelete getInstance(String uploadfileLocation,String uploadedLocation)
 	{
-		return new SendMoveDelete(uploadfileNameCollection,uploadfileLocation,uploadedLocation);
+		return new SendMoveDelete(uploadfileLocation,uploadedLocation);
 	}
 	
 	
-	private static void sendMoveDelete (List<String> uploadfileNameCollection,String uploadfileLocation,String uploadedLocation) {
+	private static void sendMoveDelete (String uploadfileLocation,String uploadedLocation) {
 	
 		//send method
 		while(true) {
 			try {
 				System.out.println("SEND STATUS :" +send());
-				
-//				if(send()==true)
-//				{	
-//					//move method					
-//					if(move()==true && delete() == true)
-//					{								
-						//delete method
-				
+
 				System.out.println("UPLOAD FILE LOCATION : "+uploadfileLocation);
 				System.out.println("UPLOADED LOCATION : "+uploadedLocation);
+				System.out.println("UPLOAD FILE NAME SIZE : "+UploadFileNameCollection.getAll().size());
 				
-				CopyFileToUploaded.copyFile(uploadfileNameCollection, uploadfileLocation, uploadedLocation);
-//					}else {
-//						System.out.println("...Copying files to Uploaded Directory");
-//						System.out.println("...Deleting file from Upload Directory");
-//					}
-//					System.out.println("...Files copied to uploaded folder and deleted from upload folder");
-//					break;
-//				}else
-//				{
-//					System.out.println("...Sending Files to Server");
-//				}
+				CopyFileToUploaded.copyFile(uploadfileLocation, uploadedLocation);
+
 				Thread.sleep(5000);
+				break;
 			}catch(InterruptedException io) {}
 				
 		}
