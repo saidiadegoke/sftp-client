@@ -1,5 +1,14 @@
 package com.flexipgroup.app.cipher;
 
+import java.io.File;
+
+import org.ini4j.Wini;
+
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+
 /**
  * 
  * TODO
@@ -9,31 +18,52 @@ package com.flexipgroup.app.cipher;
  */
 public class SFTPAgent {
 	
-	private String filePath;
-
+	private static String filePath = System.getProperty("user.home")+File.separator+"/sshj/rnmon.mp4";
+	
 	public SFTPAgent(String filePath) {
 		this.filePath = filePath;
 	}
 	
-	public void connect() {
+	
+	
+	public static ChannelSftp connect(String host,String username, String password) throws JSchException {
 		
-		try {
-			// TODO
-			// try to connect so SFTP
-		} catch (Exception e) {
-			// Retry at 5 min intervals for 24 hours.
-			// For now, you can just save the Log error to a file.
-		}
+		String knownHosts = System.getProperty("user.home") + File.separator + ".ssh/known_hosts";
 		
+		JSch jsch = new JSch();
+		jsch.setKnownHosts(knownHosts);
+		
+		Session session = jsch.getSession(username, host);
+		session.setPassword(password);
+		
+		session.connect();
+		System.out.println(session.isConnected());
+
+		return (ChannelSftp) session.openChannel("sftp");		
+
 	}
 	
-	public void send() {
+	
+	
+	public static void send(Wini ini,ChannelSftp sftp, String filePath){
 		try {
 			// TODO
-			// Try sending the file here
+			
+			String remotefilePath = ini.get("sftp", "remotefilePath");
+			System.out.println("REMOTE FILE PATH: "+remotefilePath);
+			System.out.println("FILEPAth from sftpagent : "+filePath);
+			
+			System.out.println("SERVER CONNECTED : "+sftp.isConnected());
+			
+			Upload.getUpload(filePath, remotefilePath, sftp,FileUploadProgress.getMonitorProgress());
+			
+			
 		} catch (Exception e) {
-			// Log operations
+			System.out.println("Not sending");
+			e.printStackTrace();
 		}
 	}
-
+	
 }
+	
+
