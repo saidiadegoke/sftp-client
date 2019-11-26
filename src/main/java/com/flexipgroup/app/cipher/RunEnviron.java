@@ -88,9 +88,7 @@ public class RunEnviron {
 				try
 				{
 					while(true)
-					{
-							
-						
+					{		
 						if(UploadFilesCollection.getAll().isEmpty())
 						{
 							System.out.println("Status : ...Waiting to send file");
@@ -107,9 +105,7 @@ public class RunEnviron {
 				{
 					System.out.println("empty array");
 				}
-
 //				runsend(ini,sftp,ufc,ufnc);
-				
 			}
 		};
 		
