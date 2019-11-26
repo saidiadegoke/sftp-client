@@ -1,10 +1,8 @@
 package com.flexipgroup.app;
 
-import java.io.IOException;
-
-import com.flexipgroup.app.cipher.SecretKeyGen;
 import com.flexipgroup.app.config.ConfigurationFile;
-import com.flexipgroup.app.service.MonitorDirectory;
+import com.flexipgroup.app.log.FileLogger;
+import com.flexipgroup.app.service.FileManager;
 
 public class Application {
 
@@ -12,7 +10,7 @@ public class Application {
 		
 		ConfigurationFile config = new ConfigurationFile();
 		
-		if(true) {
+		while(true) {
 			/**
 			 * 
 			 * TODO
@@ -34,25 +32,18 @@ public class Application {
 			 * 2. Call its run() method
 			 * 
 			 */
-			System.out.println("Watch file changes on FileObserver");
+			 FileLogger Logger = new FileLogger();
+			 FileManager manage = new FileManager();
+			 //manage.moveFile( , destinationFile);
+			 
+			 Logger.log("Watch file changes on FileObserver","error" );
 			try {
-				//String secretKey = new SecretKeyGen().run();
 				Thread.sleep(config.MAIN_POLL_INTERVAL);
 			} catch (InterruptedException e) {
 				// TODO 
 				// Log everything happening, especially the errors.
 				e.printStackTrace();
 			}
-		}
-		
-		try {
-			MonitorDirectory.run();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 	}
