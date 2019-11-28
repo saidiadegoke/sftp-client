@@ -41,6 +41,13 @@ import com.flexipgroup.app.config.ConfigurationFile;
 public class Crypto
 {
 	ConfigurationFile config = new ConfigurationFile();
+	String mPassword = null;
+    byte [] mInitVec = null;
+    byte [] mSalt = null;
+    Cipher mEcipher = null;
+    Cipher mDecipher = null;
+	private String inFilePath; 
+	private String outFilePath;
     /**
      * create an object with just the passphrase from the user. Don't do anything else yet 
      * @param password
@@ -126,9 +133,9 @@ public class Crypto
 
         /* Create the Encryption cipher object and store as a member variable
          */
-        config.mEcipher = Cipher.getInstance ("AES/CBC/PKCS5Padding");
-        config.mEcipher.init (Cipher.ENCRYPT_MODE, secret);
-        AlgorithmParameters params = config.mEcipher.getParameters ();
+        mEcipher = Cipher.getInstance ("AES/CBC/PKCS5Padding");
+        mEcipher.init (Cipher.ENCRYPT_MODE, secret);
+        AlgorithmParameters params = mEcipher.getParameters ();
 
         // get the initialization vectory and store as member var 
         config.mInitVec = params.getParameterSpec (IvParameterSpec.class).getIV();
@@ -184,8 +191,8 @@ public class Crypto
         secret = new SecretKeySpec(tmp.getEncoded(), "AES");
 
         /* Decrypt the message, given derived key and initialization vector. */
-        config.mDecipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        config.mDecipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(config.mInitVec));
+      mDecipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+      mDecipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(config.mInitVec));
     }
 
 
@@ -228,7 +235,7 @@ public class Crypto
                 trimbuf[i] = inbuf[i];
 
             // encrypt the buffer using the cipher obtained previosly
-            byte [] tmp = config.mEcipher.update (trimbuf);
+            byte [] tmp = mEcipher.update (trimbuf);
 
             // I don't think this should happen, but just in case..
             if (tmp != null)
@@ -236,7 +243,7 @@ public class Crypto
         }
 
         // finalize the encryption since we've done it in blocks of MAX_FILE_BUF
-        byte [] finalbuf = config.mEcipher.doFinal ();
+        byte [] finalbuf = mEcipher.doFinal ();
         if (finalbuf != null)
             fout.write (finalbuf);
 
@@ -277,7 +284,7 @@ public class Crypto
         fin = new FileInputStream (input);
 
         // creating a decoding stream from the FileInputStream above using the cipher created from setupDecrypt()
-        cin = new CipherInputStream (fin, config.mDecipher);
+        cin = new CipherInputStream (fin, mDecipher);
 
         while ((nread = cin.read (inbuf)) > 0 )
         {

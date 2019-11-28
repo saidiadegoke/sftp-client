@@ -29,10 +29,8 @@ public class ConfigurationFile {
     public String mPassword;
     public int ITERATIONS;
     public int KEYLEN_BITS;
-    public Cipher mDecipher;
     public byte [] mInitVec;
     public byte [] mSalt;
-    public Cipher mEcipher;
     
 	public ConfigurationFile() {
 		try {
@@ -58,10 +56,6 @@ public class ConfigurationFile {
         mPassword = ini.get("crypto", "mPassword");
         ITERATIONS = ini.get("crypto","ITERATIONS",int.class);
         KEYLEN_BITS = ini.get("crypto","KEYLEN_BITS",int.class);
-        mDecipher = ini.get("crypto","mDecipher",Cipher.class);
-        mEcipher = ini.get("crypto","mEcipher",Cipher.class);
-        mSalt = ini.get("crypto", "mSalt", byte[].class);
-        mInitVec = ini.get("crypto","mInitVec",byte[].class);
 
 	}
 

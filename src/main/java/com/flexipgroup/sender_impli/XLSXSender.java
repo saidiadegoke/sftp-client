@@ -30,7 +30,6 @@ public class XLSXSender implements SenderStrategy {
 	}
 
 
-
 public void execute() throws IOException, TimeoutException {
 		//create a new connection to the message mq server 		 
 		 ConnectionFactory factory = new ConnectionFactory();

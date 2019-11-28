@@ -7,7 +7,6 @@ import com.flexipgroup.reciever_context.RecieverContext;
 import com.flexipgroup.reciever_strategy.RecieverStrategy;
 
 
-
 public class RecieverClient {
 String filePath;
 	
@@ -16,9 +15,9 @@ String filePath;
 		this.filePath = filePath;
 	}
 	
-	public static void main(String[] args) throws IOException, TimeoutException {
-		new RecieverClient("C:\\Users\\ANGER DOOSHIMA LOIS\\Desktop\\newExcel\\Sample.xlsx").run();
-	}	
+//	public static void main(String[] args) throws IOException, TimeoutException {
+//		new RecieverClient("C:\\Users\\ANGER DOOSHIMA LOIS\\Desktop\\newExcel\\Sample.xlsx").run();
+//	}	
 	
 	public  void run() throws IOException, TimeoutException {
 

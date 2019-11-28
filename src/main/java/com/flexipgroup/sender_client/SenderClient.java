@@ -17,10 +17,10 @@ public class SenderClient {
 		this.filePath = filePath;
 	}
 	
-	public static void main(String[] args) throws IOException, TimeoutException {
-		new SenderClient("C:\\Users\\ANGER DOOSHIMA LOIS\\Desktop\\Sample.xlsx").run();
-		
-	}	
+//	public static void main(String[] args) throws IOException, TimeoutException {
+//		new SenderClient("C:\\Users\\ANGER DOOSHIMA LOIS\\Desktop\\Sample.xlsx").run();
+//		
+//	}	
 	
 	public  void run() throws IOException, TimeoutException {
 

@@ -29,14 +29,14 @@ public class Application {
 			 * Transfer the file upstream by following the following steps:
 			 * 
 			 * 1. Create an instance of FileTransferService with the encryptedFilePath
-			 * 2. Call its run() method
-			 * 
+			 * 2. Call its run() method 
+			 *  
 			 */
 			 FileLogger Logger = new FileLogger();
 			 FileManager manage = new FileManager();
 			 //manage.moveFile( , destinationFile);
 			 
-			 Logger.log("Watch file changes on FileObserver","error" );
+			 Logger.log("Watch file changes on FileObserver","info" );
 			try {
 				Thread.sleep(config.MAIN_POLL_INTERVAL);
 			} catch (InterruptedException e) {
