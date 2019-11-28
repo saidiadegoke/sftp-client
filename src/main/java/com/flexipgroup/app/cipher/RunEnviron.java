@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.ini4j.Wini;
 
+import com.flexipgroup.app.config.ConfigurationFile;
 import com.flexipgroup.app.service.FileObserver;
 import com.flexipgroup.app.smd.SendMoveDelete;
 import com.jcraft.jsch.ChannelSftp;
@@ -11,7 +12,7 @@ import com.jcraft.jsch.JSchException;
 
 public class RunEnviron {
 	
-	public static void runsend(Wini ini,ChannelSftp sftp,UploadFilesCollection ufc,UploadFileNameCollection ufnc)
+	public static void runsend(UploadFilesCollection ufc,UploadFileNameCollection ufnc) throws Exception
 	{
 		String path = System.getProperty("user.home")+File.separator;
 		
@@ -21,20 +22,21 @@ public class RunEnviron {
 			String file = ufc.get(i);
 			
 			String fileName = UploadFileNameCollection.get(i);
+			ChannelSftp sftp = SFTPAgent.connect();
 			
 			System.out.println("sending file "+file);
 			System.out.println("sending filename "+fileName);
 			
 			//send method
-			SFTPAgent.send(ini, sftp, file);
+			SFTPAgent.send(sftp, file);
 		
 		}
 		
-		SendMoveDelete.getInstance(path+ini.get("polling", "upload"),path+ini.get("polling", "uploaded"));
+		//SendMoveDelete.getInstance(path+ini.get("polling", "upload"),path+ini.get("polling", "uploaded"));
 		
 	}
 	
-	public static void main (String [] args)throws Exception
+	public static void main1 (String [] args)throws Exception
 	{
 		String iniPath = System.getProperty("user.home")+File.separator+"/Documents/flexware/sftp-client/config.ini";		
 		Wini ini = new Wini(new File(iniPath));
@@ -48,15 +50,17 @@ public class RunEnviron {
 		UploadFilesCollection ufc = new UploadFilesCollection();
 		UploadFileNameCollection ufnc = new UploadFileNameCollection();
 		
-		ChannelSftp sftp = SFTPAgent.connect(host,username,password);
-		
 		Thread t1 = new Thread() {
 			@Override
 			public void run ()
 			{
 				try {
+					SFTPAgent sftp = new SFTPAgent("", new ConfigurationFile());
 					sftp.connect();
 				} catch (JSchException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -94,7 +98,12 @@ public class RunEnviron {
 							System.out.println("Status : ...Waiting to send file");
 						}
 						else {
-							runsend(ini,sftp,ufc,ufnc);
+							try {
+								runsend(ufc,ufnc);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						Thread.sleep(5000);
 					}										

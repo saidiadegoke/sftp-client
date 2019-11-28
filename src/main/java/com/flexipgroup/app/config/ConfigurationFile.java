@@ -21,6 +21,9 @@ import com.flexipgroup.app.cipher.Crypto;
 public class ConfigurationFile {
 	
 	public String SFTP_PASSWORD;
+	public String SFTP_USERNAME;
+	public String SFTP_HOSTNAME;
+	public String SFTP_REMOTE_PATH;
 	public int SFTP_PORT_NUMBER;
 	public int MAIN_POLL_INTERVAL;
 	public String BASEPATH;
@@ -33,6 +36,13 @@ public class ConfigurationFile {
     public byte [] mInitVec;
     public byte [] mSalt;
     public Cipher mEcipher;
+    public String DOWNLOAD_FOLDER;
+    public String READ_FOLDER;
+    public String ARCHIVE_FOLDER;
+    public String ERROR_FOLDER;
+    public String SUCCESS_FOLDER;
+    public String CUSTOMER_ID;
+    public String SECRET_KEY;
     
 	public ConfigurationFile() {
 		try {
@@ -51,18 +61,25 @@ public class ConfigurationFile {
         //int port = ini.get("port", "22", int.class);
         //double height = ini.get("owner", "height", double.class);
         SFTP_PASSWORD = ini.get("sftp", "password");
+        SFTP_USERNAME = ini.get("sftp", "username");
+        SFTP_HOSTNAME = ini.get("sftp",  "host");
+        SFTP_REMOTE_PATH = ini.get("sftp", "remotefilePath");
         MAIN_POLL_INTERVAL = ini.get("app", "main_poll_interval", int.class);
-        BASEPATH = ini.get("path", "basepath");
+        BASEPATH = System.getProperty("user.home") + File.separatorChar + ini.get("path", "basepath");
         MAX_FILE_BUF = ini.get("crypto", "MAX_FILE_BUF", int.class);
         SALT_LEN = ini.get("crypto", "SALT_LEN", int.class);
         mPassword = ini.get("crypto", "mPassword");
         ITERATIONS = ini.get("crypto","ITERATIONS",int.class);
         KEYLEN_BITS = ini.get("crypto","KEYLEN_BITS",int.class);
-        mDecipher = ini.get("crypto","mDecipher",Cipher.class);
-        mEcipher = ini.get("crypto","mEcipher",Cipher.class);
-        mSalt = ini.get("crypto", "mSalt", byte[].class);
-        mInitVec = ini.get("crypto","mInitVec",byte[].class);
-
+        //mDecipher = ini.get("crypto","mDecipher",Cipher.class);
+        //mEcipher = ini.get("crypto","mEcipher",Cipher.class);
+        //mSalt = ini.get("crypto", "mSalt", byte[].class);
+        //mInitVec = ini.get("crypto","mInitVec",byte[].class);
+        DOWNLOAD_FOLDER = ini.get("path", "download");
+        READ_FOLDER = ini.get("path", "read");
+        ARCHIVE_FOLDER = ini.get("path", "archive");
+        CUSTOMER_ID = ini.get("app", "customerID");
+        SECRET_KEY = ini.get("app", "secretKey");
 	}
 
 }

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class FileMonitor {
 	
-	public static void main(String[] args) {
+	public static void main1(String[] args) {
 		
 		String path = System.getProperty("user.home") + File.separator + "sshkeys/tmp/payment.csv";
 		try {

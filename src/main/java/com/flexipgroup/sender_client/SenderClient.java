@@ -17,7 +17,7 @@ public class SenderClient {
 		this.filePath = filePath;
 	}
 	
-	public static void main(String[] args) throws IOException, TimeoutException {
+	public static void main1(String[] args) throws IOException, TimeoutException {
 		new SenderClient("C:\\Users\\ANGER DOOSHIMA LOIS\\Desktop\\Sample.xlsx").run();
 		
 	}	

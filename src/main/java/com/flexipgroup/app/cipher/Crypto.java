@@ -305,7 +305,7 @@ public class Crypto
     /**
      * adding main() for usage demonstration. With member vars, some of the locals would not be needed
      */
-    public static void main(String [] args)
+    public static void main1(String [] args)
     {
 
         // create the input.txt file in the current directory before continuing
@@ -413,10 +413,10 @@ public class Crypto
           e.printStackTrace();
       }
 
-        /*
-         * write out decrypted file
-         */
-        try
+    /*
+     * write out decrypted file
+     */
+      try
       {
           dc.ReadEncryptedFile (eoutput, doutput);
           System.out.println ("decryption finished to " + doutput.getName ());

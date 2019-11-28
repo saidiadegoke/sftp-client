@@ -22,7 +22,6 @@ public class XLSXReciever implements RecieverStrategy{
 
 	public  void execute() throws IOException, TimeoutException {
 
-
 		//open up  the connection to the message mq server 		 
 		 ConnectionFactory factory = new ConnectionFactory();
 		 

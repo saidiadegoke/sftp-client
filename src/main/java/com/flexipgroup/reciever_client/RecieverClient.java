@@ -16,7 +16,7 @@ String filePath;
 		this.filePath = filePath;
 	}
 	
-	public static void main(String[] args) throws IOException, TimeoutException {
+	public static void main1(String[] args) throws IOException, TimeoutException {
 		new RecieverClient("C:\\Users\\ANGER DOOSHIMA LOIS\\Desktop\\newExcel\\Sample.xlsx").run();
 	}	
 	
