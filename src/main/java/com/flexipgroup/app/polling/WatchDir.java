@@ -28,6 +28,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.flexipgroup.app.polling;
 
 import java.nio.file.*;
 import static java.nio.file.StandardWatchEventKinds.*;
@@ -174,7 +175,7 @@ public class WatchDir {
         System.exit(-1);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main1(String[] args) throws IOException {
         // parse arguments
         if (args.length == 0 || args.length > 2)
             usage();
