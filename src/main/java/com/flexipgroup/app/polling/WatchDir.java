@@ -175,7 +175,7 @@ public class WatchDir {
         System.exit(-1);
     }
 
-    public static void main1(String[] args) throws IOException {
+    public static void mainRun(String[] args) throws IOException {
         // parse arguments
         if (args.length == 0 || args.length > 2)
             usage();

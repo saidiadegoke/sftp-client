@@ -26,7 +26,7 @@ import com.jcraft.jsch.SftpException;
  * for connecting and sending to the server.
  *
  */
-public class FileTransferService {
+public class FileTransferService extends Thread {
 	
 	private String filePath;
 

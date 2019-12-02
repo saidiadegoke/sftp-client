@@ -81,7 +81,7 @@ public class SFTPAgent {
 	  
 	    //String remoteDir = remotePath + File.separator + "upload" + File.separator + f.getName();
 	    String remoteDir = remotePath + "/" + "upload" + "/" + f.getName();
-	    prepareUpload(channelSftp, remoteDir, false);
+	    //prepareUpload(channelSftp, remoteDir, false);
 	   
 	    System.out.println(remoteDir);
 	    channelSftp.put(filePath, remoteDir);
@@ -99,7 +99,7 @@ public class SFTPAgent {
 			
 			System.out.println("SERVER CONNECTED : "+sftp.isConnected());
 			
-			Upload.getUpload(filePath, remotefilePath, sftp,FileUploadProgress.getMonitorProgress());
+			//Upload.getUpload(filePath, remotefilePath, sftp,FileUploadProgress.getMonitorProgress());
 			
 		} catch (Exception e) {
 			System.out.println("Not sending");
@@ -110,8 +110,7 @@ public class SFTPAgent {
 	public boolean prepareUpload(
 			  ChannelSftp sftpChannel,
 			  String path,
-			  boolean overwrite)
-			  throws SftpException, IOException, FileNotFoundException {
+			  boolean overwrite) {
 
 			  boolean result = false;
 
@@ -124,27 +123,37 @@ public class SFTPAgent {
 			        sftpChannel.cd(folder);
 			      } catch (SftpException e) {
 			        // No such folder yet:
-			        sftpChannel.mkdir(folder);
-			        sftpChannel.cd(folder);
+			        try {
+						sftpChannel.mkdir(folder);
+						sftpChannel.cd(folder);
+					} catch (SftpException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			        
 			      }
 			    }
 			  }
 
-			  // Folders ready. Remove such a file if exists:    
-			  if (sftpChannel.ls(path).size() > 0) {
-			    if (!overwrite) {
-			      System.out.println(
-			        "Error - file " + path + " was not created on server. " +
-			        "It already exists and overwriting is forbidden.");
-			    } else {
-			      // Delete file:
-			      sftpChannel.ls(path); // Search file.
-			      sftpChannel.rm(path); // Remove file.
-			      result = true;
-			    }
-			  } else {
-			    // No such file:
-			    result = true;
+			  // Folders ready. Remove such a file if exists: 
+			  try {
+				  if (sftpChannel.ls(path).size() > 0) {
+				    if (!overwrite) {
+				      System.out.println(
+				        "Error - file " + path + " was not created on server. " +
+				        "It already exists and overwriting is forbidden.");
+				    } else {
+				      // Delete file:
+				      sftpChannel.ls(path); // Search file.
+				      sftpChannel.rm(path); // Remove file.
+				      result = true;
+				    }
+				  } else {
+				    // No such file:
+				    result = true;
+				  }
+			  } catch(SftpException e) {
+				  e.printStackTrace();
 			  }
 
 			  return result;

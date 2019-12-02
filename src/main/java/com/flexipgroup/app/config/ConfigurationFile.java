@@ -43,6 +43,7 @@ public class ConfigurationFile {
     public String SUCCESS_FOLDER;
     public String CUSTOMER_ID;
     public String SECRET_KEY;
+	public boolean CREATE_REMOTE_FOLDERS;
     
 	public ConfigurationFile() {
 		try {
@@ -80,6 +81,7 @@ public class ConfigurationFile {
         ARCHIVE_FOLDER = ini.get("path", "archive");
         CUSTOMER_ID = ini.get("app", "customerID");
         SECRET_KEY = ini.get("app", "secretKey");
+        CREATE_REMOTE_FOLDERS = ini.get("app", "createRemoteFolders", boolean.class);
 	}
 
 }
