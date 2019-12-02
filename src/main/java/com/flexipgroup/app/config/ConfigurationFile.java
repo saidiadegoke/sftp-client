@@ -43,6 +43,8 @@ public class ConfigurationFile {
     public String SUCCESS_FOLDER;
     public String CUSTOMER_ID;
     public String SECRET_KEY;
+    public String XLSX;
+    public String FILEPATH;
     
 	public ConfigurationFile() {
 		try {
@@ -80,6 +82,8 @@ public class ConfigurationFile {
         ARCHIVE_FOLDER = ini.get("path", "archive");
         CUSTOMER_ID = ini.get("app", "customerID");
         SECRET_KEY = ini.get("app", "secretKey");
+        XLSX = ini.get("mimeType", "XLSX");
+        FILEPATH = ini.get("filePath", "FILEPATH");
 	}
 
 }

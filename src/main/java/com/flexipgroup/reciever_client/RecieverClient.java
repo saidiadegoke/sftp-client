@@ -3,20 +3,20 @@ package com.flexipgroup.reciever_client;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import com.flexipgroup.app.config.ConfigurationFile;
 import com.flexipgroup.reciever_context.RecieverContext;
 import com.flexipgroup.reciever_strategy.RecieverStrategy;
 
 
-
 public class RecieverClient {
 String filePath;
-	
-
+ConfigurationFile config = new ConfigurationFile();
+	 
 	public RecieverClient(String filePath) {
 		this.filePath = filePath;
 	}
 	
-	public static void main1(String[] args) throws IOException, TimeoutException {
+	public static void main(String[] args) throws IOException, TimeoutException { 
 		new RecieverClient("C:\\Users\\ANGER DOOSHIMA LOIS\\Desktop\\newExcel\\Sample.xlsx").run();
 	}	
 	

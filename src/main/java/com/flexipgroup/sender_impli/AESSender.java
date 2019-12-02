@@ -19,13 +19,13 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-public class TXTSender implements SenderStrategy {
+public class AESSender implements SenderStrategy  {
 	private  MessagingFile filePath;
 	 private static final Logger LOGGER = Logger.getLogger(SenderClient.class);
 
-	public TXTSender() {}
+	public AESSender() {}
 	
-	public TXTSender(MessagingFile files) {
+	public AESSender(MessagingFile files) {
 		this.filePath = files;
 	}
 
@@ -38,25 +38,16 @@ public void execute() throws IOException, TimeoutException {
 		 try (Connection connection = factory.newConnection();
 		      Channel channel = connection.createChannel()) {
 			 
-			 channel.queueDeclare("key5670", false, false, false, null);
-			
-		     //Workbook workbook = WorkbookFactory.create(new File(filePath.getUrl()));				
-		     
-//			    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//				 workbook.write(bos);
+			 channel.queueDeclare("key5780", false, false, false, null);
+			  File file = new File(filePath.getUrl());				
 
-						
-			    //byte[] excelBytes = bos.toByteArray();
-			 
-			 File file = new File(filePath.getUrl());
-			  //init array with file length
 			  byte[] bytesArray = new byte[(int) file.length()]; 
 
 			  FileInputStream fis = new FileInputStream(file);
 			  fis.read(bytesArray); //read file into bytes[]
-			 // fis.close();
+			  //fis.close();
 						
-				channel.basicPublish("","key5670",false, null,bytesArray);
+				channel.basicPublish("","key5780",false, null,bytesArray);
 
 				 //String filing = bytesarray.toString();
 				LOGGER.info("excel path [Byte Format] : " +  bytesArray);
@@ -69,9 +60,8 @@ public void execute() throws IOException, TimeoutException {
 		} catch (EncryptedDocumentException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-//		} catch (InvalidFormatException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-			}
-	}
+		
+		}
+}	 
 }
+

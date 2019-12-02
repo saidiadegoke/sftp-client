@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
+import com.flexipgroup.sender_impli.AESSender;
 import com.flexipgroup.sender_impli.CSVSender;
 import com.flexipgroup.sender_impli.TXTSender;
 import com.flexipgroup.sender_impli.XLSXSender;
@@ -27,7 +28,8 @@ public class SenderFactory {
 	}
 
 	public SenderStrategy getInstance() throws IOException {
-		SenderStrategy senderStrategy = null;
+			SenderStrategy senderStrategy = null;	
+		//System.out.println(file.getMimeType());
 		switch(file.getMimeType()) {
 			case MimeType.CSV:
 				senderStrategy = new CSVSender(file);
@@ -35,6 +37,11 @@ public class SenderFactory {
 			case MimeType.XLSX:
 				senderStrategy = new XLSXSender(file);
 				break;
+			case MimeType.TXT:
+				senderStrategy = new XLSXSender(file);
+				break;
+			default:
+				senderStrategy = new AESSender(file);
 					
 		}
 		return senderStrategy;

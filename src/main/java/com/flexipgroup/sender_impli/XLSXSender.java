@@ -20,13 +20,13 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 public class XLSXSender implements SenderStrategy {
-	private  MessagingFile files;
+	private  MessagingFile filePath;
 	 private static final Logger LOGGER = Logger.getLogger(SenderClient.class);
 
 	public XLSXSender() {}
 	
 	public XLSXSender(MessagingFile files) {
-		this.files = files;
+		this.filePath = files;
 	}
 
 
@@ -40,7 +40,7 @@ public void execute() throws IOException, TimeoutException {
 			 
 			 channel.queueDeclare("key5000", false, false, false, null);
 			
-		     Workbook workbook = WorkbookFactory.create(new File(files.getUrl()));				
+		     Workbook workbook = WorkbookFactory.create(new File(filePath.getUrl()));				
 		     
 			    ByteArrayOutputStream bos = new ByteArrayOutputStream();
 				 workbook.write(bos);

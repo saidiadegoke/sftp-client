@@ -17,6 +17,7 @@ import javax.crypto.NoSuchPaddingException;
 import com.flexipgroup.app.cipher.CryptoEncrypt;
 import com.flexipgroup.app.cipher.SFTPAgent;
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.sender_client.SenderClient;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 
@@ -56,17 +57,19 @@ public class FileTransferService {
 		CryptoEncrypt encryptor = new CryptoEncrypt(config.SECRET_KEY, archiveFile, readFile);
 		try {
 			encryptor.encrypt();
-			SFTPAgent agent = new SFTPAgent(readFile, config);
+			new SenderClient(readFile).run();
+			//SFTPAgent agent = new SFTPAgent(readFile,   A¬zconfig);
 			
-			try {
-				agent.upload();
-			} catch (JSchException e) {
+			//try {
+				//agent.upload();
+				//client.upload();
+			//} catch (JSchException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SftpException e) {
+			//	e.printStackTrace();
+			//} catch (SftpException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//	e.printStackTrace();
+			//}
 		} catch (InvalidKeyException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

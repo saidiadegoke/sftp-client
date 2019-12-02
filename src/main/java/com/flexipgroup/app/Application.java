@@ -37,15 +37,15 @@ public class Application {
 				config.BASEPATH + File.separatorChar + config.SUCCESS_FOLDER
 		};
 		
-		try {
-			run(paths, config);
-		} catch (JSchException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SftpException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			run(paths, config);
+//		} catch (JSchException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (SftpException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		boolean valid = true;
 		do {
