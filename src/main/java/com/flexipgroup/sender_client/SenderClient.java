@@ -15,20 +15,27 @@ public class SenderClient {
 	 
 	public SenderClient(String filePath) {
 		this.filePath = filePath;
+		run();
 	}
 	
 	public static void main1(String[] args) throws IOException, TimeoutException {
 		new SenderClient("C:\\Users\\ANGER DOOSHIMA LOIS\\Desktop\\Sample.xlsx").run();
 		
-	}	
+	}
 	
-	public  void run() throws IOException, TimeoutException {
+	public  void run() {
 
 		SenderContext context = new SenderContext();
-		SenderStrategy sender = new SenderFactory(new MessagingFile(filePath)).getInstance();
-		
-		context.setStrategy(sender);
-		context.execute();         
+		SenderStrategy sender;
+		try {
+			sender = new SenderFactory(new MessagingFile(filePath)).getInstance();
+			context.setStrategy(sender);
+			context.execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	         
 	}
 }
 

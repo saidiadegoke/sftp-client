@@ -61,6 +61,7 @@ public class SFTPAgent {
 	    jsch.setKnownHosts(knownHosts);
 	    // System.getProperty("user.home") + File.separator + "known_hosts"
 	    //jsch.setKnownHosts("/Users/saidiadegoke/known_hosts");
+	    System.out.println(remoteHost);
 	    Session jschSession = jsch.getSession(username, remoteHost);
 	    
 	    java.util.Properties config = new java.util.Properties(); 
@@ -109,52 +110,75 @@ public class SFTPAgent {
 	
 	public boolean prepareUpload(
 			  ChannelSftp sftpChannel,
-			  String path,
+			  String userId,
+			  String[] paths,
 			  boolean overwrite) {
 
 			  boolean result = false;
+			  
+			  //String[] folders = path.split("/");
+			  String basedir = userId;
+			  System.out.println(basedir);
 
-			  // Build romote path subfolders inclusive:
-			  String[] folders = path.split("/");
-			  for (String folder : folders) {
-			    if (folder.length() > 0 && !folder.contains(".")) {
-			      // This is a valid folder:
 			      try {
-			        sftpChannel.cd(folder);
+			        sftpChannel.cd(basedir);
 			      } catch (SftpException e) {
 			        // No such folder yet:
-			        try {
-						sftpChannel.mkdir(folder);
-						sftpChannel.cd(folder);
-					} catch (SftpException e1) {
+			    	  try {
+						sftpChannel.mkdir(basedir);
+					} catch (SftpException e3) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						e3.printStackTrace();
+					}
+			    	  try {
+						sftpChannel.cd(basedir);
+						try {
+							for(String path: paths) {
+								if(path != null && !path.isEmpty()) {
+									try {
+										sftpChannel.cd(path);
+									} catch (SftpException e2) {
+										System.out.println(path);
+										sftpChannel.mkdir(path);
+									}
+								}
+							}
+							//sftpChannel.cd(folder);
+						} catch (SftpException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} catch (SftpException e3) {
+						// TODO Auto-generated catch block
+						e3.printStackTrace();
 					}
 			        
+			        
 			      }
-			    }
-			  }
+			    
+			  
+
+			  // Build romote path subfolders inclusive:
+		/*
+		 * String[] folders = path.split("/"); for (String folder : folders) { if
+		 * (folder.length() > 0 && !folder.contains(".")) { // This is a valid folder:
+		 * try { sftpChannel.cd(folder); } catch (SftpException e) { // No such folder
+		 * yet: try { sftpChannel.mkdir(folder); //sftpChannel.cd(folder); } catch
+		 * (SftpException e1) { // TODO Auto-generated catch block e1.printStackTrace();
+		 * }
+		 * 
+		 * } } }
+		 */
 
 			  // Folders ready. Remove such a file if exists: 
-			  try {
-				  if (sftpChannel.ls(path).size() > 0) {
-				    if (!overwrite) {
-				      System.out.println(
-				        "Error - file " + path + " was not created on server. " +
-				        "It already exists and overwriting is forbidden.");
-				    } else {
-				      // Delete file:
-				      sftpChannel.ls(path); // Search file.
-				      sftpChannel.rm(path); // Remove file.
-				      result = true;
-				    }
-				  } else {
-				    // No such file:
-				    result = true;
-				  }
-			  } catch(SftpException e) {
-				  e.printStackTrace();
-			  }
+		/*
+		 * try { if (sftpChannel.ls(path).size() > 0) { if (!overwrite) {
+		 * System.out.println( "Error - file " + path + " was not created on server. " +
+		 * "It already exists and overwriting is forbidden."); } else { // Delete file:
+		 * sftpChannel.ls(path); // Search file. sftpChannel.rm(path); // Remove file.
+		 * result = true; } } else { // No such file: result = true; } }
+		 * catch(SftpException e) { e.printStackTrace(); }
+		 */
 
 			  return result;
 			}

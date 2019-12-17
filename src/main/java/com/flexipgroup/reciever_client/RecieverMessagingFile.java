@@ -10,12 +10,12 @@ public class RecieverMessagingFile {
 	private String url;
 	Path path;
 	
-	RecieverMessagingFile(String url) {
+	public RecieverMessagingFile(String url) {
+		System.out.println("New url in RMF: " + url);
 		this.url = url;
 	}
 
 	public Path getPath(){
-		System.out.println(new File(url).exists());
 		return Paths.get(url);
 	}
 	
@@ -24,7 +24,7 @@ public class RecieverMessagingFile {
 	}
 
 	public String getExtension() { 
-		return null;
+		return url.substring(url.lastIndexOf(".") + 1);
 	}
 
 	public String getMimeType() throws IOException {

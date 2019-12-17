@@ -9,6 +9,8 @@ import java.security.spec.InvalidParameterSpecException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -16,7 +18,10 @@ import javax.crypto.NoSuchPaddingException;
 
 import com.flexipgroup.app.cipher.CryptoEncrypt;
 import com.flexipgroup.app.cipher.SFTPAgent;
+import com.flexipgroup.app.common.FileUtils;
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.reciever_client.RecieverClient;
+import com.flexipgroup.sender_client.SenderClient;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 
@@ -26,7 +31,7 @@ import com.jcraft.jsch.SftpException;
  * for connecting and sending to the server.
  *
  */
-public class FileTransferService extends Thread {
+public class FileTransferService {
 	
 	private String filePath;
 
@@ -36,37 +41,22 @@ public class FileTransferService extends Thread {
 	
 	public void run() {
 		try {
-			runSFTP();
+			testRun();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void runSFTP() throws Exception {
+	public void testRun() {
 		ConfigurationFile config = new ConfigurationFile();
-		File f = new File(filePath);
-		String ext = filePath.substring(filePath.lastIndexOf("."));
-		LocalDateTime date = LocalDateTime.now();
-		ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
-		long epoch = date.atZone(zoneId).toEpochSecond(); //date.atStartOfDay(zoneId).toEpochSecond();
-		String readFile = config.BASEPATH + File.separator + config.READ_FOLDER + File.separator + config.CUSTOMER_ID + "-payment-" + epoch + ext + ".aes";
-		String archiveFile = config.BASEPATH + File.separator + config.ARCHIVE_FOLDER + File.separator + config.CUSTOMER_ID + "-" + epoch + f.getName();
-		FileManager.moveFile(filePath, archiveFile);
+		FileUtils fileUtils = new FileUtils(filePath);
+		String readFile = fileUtils.getDynamicReadFile();
+		String archiveFile = fileUtils.getArchiveFile();
+		FileManager.moveFile(fileUtils.getDownloadFile(), archiveFile);
 		CryptoEncrypt encryptor = new CryptoEncrypt(config.SECRET_KEY, archiveFile, readFile);
 		try {
 			encryptor.encrypt();
-			SFTPAgent agent = new SFTPAgent(readFile, config);
-			
-			try {
-				agent.upload();
-			} catch (JSchException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SftpException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		} catch (InvalidKeyException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -92,6 +82,79 @@ public class FileTransferService extends Thread {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		SFTPAgent agent = new SFTPAgent(readFile, config);
+		try {
+			agent.upload();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void runSFTP() throws Exception {
+		ConfigurationFile config = new ConfigurationFile();
+		FileUtils fileUtils = new FileUtils(filePath);
+		String readFile = fileUtils.getDynamicReadFile();
+		String archiveFile = fileUtils.getArchiveFile();
+		FileManager.moveFile(fileUtils.getDownloadFile(), archiveFile);
+		CryptoEncrypt encryptor = new CryptoEncrypt(config.SECRET_KEY, archiveFile, readFile);
+		
+		ExecutorService executorService = Executors.newFixedThreadPool(2);
+		try {
+			
+			encryptor.encrypt();
+			//SFTPAgent agent = new SFTPAgent(readFile, config);
+			SenderClient sender = new SenderClient(readFile);
+			//sender.setName("sender");
+			//sender.run();
+			//sender.join();
+			
+			Thread receiver = new RecieverClient();
+			receiver.start();
+			
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//RecieverClient receiver = new RecieverClient();
+			//receiver.setName("receiver");
+			//receiver.run();
+			//receiver.join();
+			
+			//executorService.submit(sender);
+			//executorService.submit(receiver);
+			//executorService.shutdown();
+			
+		} catch (InvalidKeyException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvalidKeySpecException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoSuchPaddingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvalidParameterSpecException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalBlockSizeException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (BadPaddingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		
 	}
 

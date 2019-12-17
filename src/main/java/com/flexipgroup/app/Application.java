@@ -17,10 +17,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.flexipgroup.app.cipher.SFTPAgent;
+import com.flexipgroup.app.common.FileUtils;
 import com.flexipgroup.app.config.ConfigurationFile;
 import com.flexipgroup.app.log.FileLogger;
 import com.flexipgroup.app.service.FileManager;
 import com.flexipgroup.app.service.FileTransferService;
+import com.flexipgroup.reciever_client.RecieverClient;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
@@ -33,18 +35,24 @@ public class Application {
 		Path faxFolder = Paths.get(config.BASEPATH + File.separatorChar + config.DOWNLOAD_FOLDER);
 		WatchService watchService = FileSystems.getDefault().newWatchService();
 		faxFolder.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+		//Thread receiver = new RecieverClient();
+		//receiver.start();
 		
 		String[] paths = {
-				config.BASEPATH + "/" + config.DOWNLOAD_FOLDER,
-				config.BASEPATH + "/" + config.READ_FOLDER,
-				config.BASEPATH + "/" + config.ERROR_FOLDER,
-				config.BASEPATH + "/" + config.ARCHIVE_FOLDER,
-				config.BASEPATH + "/" + config.SUCCESS_FOLDER
+				
+				
+				config.UPLOAD_FOLDER,
+				config.READ_FOLDER,
+				config.ERROR_FOLDER,
+				config.ARCHIVE_FOLDER,
+				config.SUCCESS_FOLDER
 		};
 		
 		try {
-			if(config.CREATE_REMOTE_FOLDERS == true)
+			if(config.CREATE_REMOTE_FOLDERS == true) {
+				System.out.println("create remote files");
 				run(paths, config);
+			}
 		} catch (JSchException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,9 +90,11 @@ public class Application {
 				WatchEvent.Kind kind = event.kind();
 				if                                                                                                                                     (StandardWatchEventKinds.ENTRY_CREATE.equals(event.kind())) {
 					String fileName = event.context().toString();
+					
 					FileTransferService transfer = new FileTransferService(
-							config.BASEPATH + File.separatorChar + config.DOWNLOAD_FOLDER + File.separatorChar + fileName);
-					transfer.start();
+							fileName);
+					//transfer.setName("FileTransfer");
+					transfer.run();
 					System.out.println("File Created:" + fileName);
 				}
 			}
@@ -101,7 +111,7 @@ public class Application {
 		  SFTPAgent agent = new SFTPAgent("", config); ChannelSftp channelSftp =
 		  agent.setupJsch(); channelSftp.connect();
 		  
-		  for(String path: paths) { agent.prepareUpload(channelSftp, path, false); }
+		  agent.prepareUpload(channelSftp, config.SFTP_REMOTE_PATH, paths, false);
 		 
 		
 	}
@@ -130,6 +140,7 @@ public class Application {
 			 * Call its run() method
 			 * 
 			 */
+			
 			FileLogger Logger = new FileLogger();
 			FileManager manage = new FileManager();
 			// manage.moveFile( , destinationFile);
