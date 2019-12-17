@@ -21,4 +21,14 @@ public class Tester {
 
 	}	
 	
+	public static void main1(String[] args) throws IOException, TimeoutException {
+		ConfigurationFile config = new ConfigurationFile();
+
+		FileLogger logger = new FileLogger();
+		//logger.log();
+		
+		//new SenderClient().run();
+
+	}
+
 }
