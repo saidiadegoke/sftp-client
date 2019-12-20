@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
@@ -19,16 +21,13 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-public class AESSender implements SenderStrategy  {
-	private  MessagingFile filePath;
+public class AESSender implements SenderStrategy {
+	private  MessagingFile file;
 	 private static final Logger LOGGER = Logger.getLogger(SenderClient.class);
-
-	public AESSender() {}
 	
-	public AESSender(MessagingFile files) {
-		this.filePath = files;
+	public AESSender(MessagingFile file) {
+		this.file = file;
 	}
-
 
 
 public void execute() throws IOException, TimeoutException {
@@ -37,31 +36,21 @@ public void execute() throws IOException, TimeoutException {
 		 
 		 try (Connection connection = factory.newConnection();
 		      Channel channel = connection.createChannel()) {
-			 
-			 channel.queueDeclare("key5780", false, false, false, null);
-			  File file = new File(filePath.getUrl());				
 
-			  byte[] bytesArray = new byte[(int) file.length()]; 
+			 channel.queueDeclare("key5000", false, false, false, null);
+		     
+		     byte[] fileByte = Files.readAllBytes(file.getPath());
 
-			  FileInputStream fis = new FileInputStream(file);
-			  fis.read(bytesArray); //read file into bytes[]
-			  //fis.close();
-						
-				channel.basicPublish("","key5780",false, null,bytesArray);
+			 channel.basicPublish("","key5000",false, null,fileByte);
 
-				 //String filing = bytesarray.toString();
-				LOGGER.info("excel path [Byte Format] : " +  bytesArray);
-				LOGGER.error("excel path [Byte Format] : " +  bytesArray);
-				LOGGER.warn("excel path [Byte Format] : " +  bytesArray);
-				LOGGER.trace("excel path [Byte Format] : " +  bytesArray);
-				LOGGER.fatal("excel path [Byte Format] : " +  bytesArray);
+			 //String filing = bytesarray.toString();
+			 LOGGER.info("excel path [Byte Format] : " +  fileByte);
 
 
 		} catch (EncryptedDocumentException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		
-		}
-}	 
-}
 
+		}
+	}
+}

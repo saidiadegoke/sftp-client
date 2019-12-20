@@ -45,6 +45,11 @@ public class ConfigurationFile {
     public String SECRET_KEY;
     public String XLSX;
     public String FILEPATH;
+	public boolean CREATE_REMOTE_FOLDERS;
+	public String FILE_EXTENSION;
+	public String RECEIVER_FOLDER;
+	public String RECEIVER_EXTENSION;
+	public String UPLOAD_FOLDER;
     
 	public ConfigurationFile() {
 		try {
@@ -65,7 +70,7 @@ public class ConfigurationFile {
         SFTP_PASSWORD = ini.get("sftp", "password");
         SFTP_USERNAME = ini.get("sftp", "username");
         SFTP_HOSTNAME = ini.get("sftp",  "host");
-        SFTP_REMOTE_PATH = ini.get("sftp", "remotefilePath");
+        SFTP_REMOTE_PATH = ini.get("path", "basedir") + File.separatorChar + ini.get("sftp", "remotefilePath");
         MAIN_POLL_INTERVAL = ini.get("app", "main_poll_interval", int.class);
         BASEPATH = System.getProperty("user.home") + File.separatorChar + ini.get("path", "basepath");
         MAX_FILE_BUF = ini.get("crypto", "MAX_FILE_BUF", int.class);
@@ -80,10 +85,17 @@ public class ConfigurationFile {
         DOWNLOAD_FOLDER = ini.get("path", "download");
         READ_FOLDER = ini.get("path", "read");
         ARCHIVE_FOLDER = ini.get("path", "archive");
+        UPLOAD_FOLDER = ini.get("path", "upload");
+        ERROR_FOLDER = ini.get("path", "error");
+        SUCCESS_FOLDER = ini.get("path", "success");
         CUSTOMER_ID = ini.get("app", "customerID");
         SECRET_KEY = ini.get("app", "secretKey");
         XLSX = ini.get("mimeType", "XLSX");
         FILEPATH = ini.get("filePath", "FILEPATH");
+        CREATE_REMOTE_FOLDERS = ini.get("app", "createRemoteFolders", boolean.class);
+        FILE_EXTENSION = ini.get("app", "fileExtension");
+        RECEIVER_FOLDER = ini.get("path", "receiver");
+        RECEIVER_EXTENSION = FILE_EXTENSION + "." + ini.get("app", "receiverExtension");
 	}
 
 }

@@ -13,7 +13,15 @@ public class SenderContext {
 		this.strategy = _strategy;
 	}
 	
-	public void execute() throws IOException, TimeoutException {
-		strategy.execute();
+	public void execute() {
+		try {
+			strategy.execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

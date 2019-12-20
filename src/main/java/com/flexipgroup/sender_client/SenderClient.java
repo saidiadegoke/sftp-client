@@ -14,25 +14,25 @@ public class SenderClient {
 	 private static final Logger LOGGER = Logger.getLogger(SenderClient.class);
 	 ConfigurationFile config = new ConfigurationFile();
 
-//	 
-//	public SenderClient(String filePath) {
-//		this.filePath = filePath;
-//	}
+
 	
 	public SenderClient(String filePath) {
 		this.filePath = filePath;
-
 	}
 	
 
-	public void run() throws IOException, TimeoutException {
-
+	public void run() {
 		SenderContext context = new SenderContext();
-		System.out.println(filePath);
-		SenderStrategy sender = new SenderFactory(new MessagingFile(filePath)).getInstance();
-
-		context.setStrategy(sender);
-		context.execute();         
+		SenderStrategy sender;
+		try {
+			sender = new SenderFactory(new MessagingFile(filePath)).getInstance();
+			context.setStrategy(sender);
+			context.execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	         
 	}
 }
 

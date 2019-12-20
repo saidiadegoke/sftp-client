@@ -1,13 +1,6 @@
 package com.flexipgroup.sender_client;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 import com.flexipgroup.sender_impli.AESSender;
 import com.flexipgroup.sender_impli.CSVSender;
@@ -28,22 +21,29 @@ public class SenderFactory {
 	}
 
 	public SenderStrategy getInstance() throws IOException {
-			SenderStrategy senderStrategy = null;	
-		//System.out.println(file.getMimeType());
-		switch(file.getMimeType()) {
-			case MimeType.CSV:
-				senderStrategy = new CSVSender(file);
-				break;
-			case MimeType.XLSX:
-				senderStrategy = new XLSXSender(file);
-				break;
-			case MimeType.TXT:
-				senderStrategy = new XLSXSender(file);
-				break;
-			default:
-				senderStrategy = new AESSender(file);
-					
+		SenderStrategy senderStrategy = null;
+		String type = file.getMimeType();
+		if(type != null) {
+			switch(file.getMimeType()) {
+				case MimeType.CSV:
+					senderStrategy = new CSVSender(file);
+					break;
+				case MimeType.XLSX:
+					senderStrategy = new XLSXSender(file);
+					break;
+				case MimeType.TXT:
+					senderStrategy = new TXTSender();
+				default:
+					break;
+						
+			}
+		} else if(file.getExtension().equals("aes")) {
+			senderStrategy = new AESSender(file);
+		} else {
+			System.out.println("Log out errors for sysadmin to see.");
+			senderStrategy = new TXTSender();
 		}
+		
 		return senderStrategy;
 	}
 	

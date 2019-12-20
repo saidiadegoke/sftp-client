@@ -2,6 +2,7 @@ package com.flexipgroup.reciever_client;
 
 import java.io.IOException;
 
+import com.flexipgroup.receiver_impli.AESReceiver;
 import com.flexipgroup.receiver_impli.XLSXReciever;
 import com.flexipgroup.reciever_strategy.RecieverStrategy;
 import com.flexipgroup.sender_client.MimeType;
@@ -19,11 +20,23 @@ private RecieverMessagingFile file;
 
 	public RecieverStrategy getInstance() throws IOException {
 		RecieverStrategy recieverStrategy = null;
-		switch(file.getMimeType()) {
-			case MimeType.XLSX:
-				recieverStrategy = new XLSXReciever(file);
-				break;
-	
+		String type = file.getMimeType();
+		if(type != null) {
+			switch(file.getMimeType()) {
+				case MimeType.XLSX:
+					recieverStrategy = new XLSXReciever(file);
+					break;
+				default:
+					if(file.getExtension().equals("aes")) {
+						recieverStrategy = new AESReceiver(file);
+					}
+					break;
+		
+			}
+		} else if(file.getExtension().equals("aes")) {
+			recieverStrategy = new AESReceiver(file);
+		} else {
+			recieverStrategy = new AESReceiver(file);
 		}
 		return recieverStrategy;
 	}

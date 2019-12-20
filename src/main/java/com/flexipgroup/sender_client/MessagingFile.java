@@ -18,7 +18,6 @@ public class MessagingFile {
 	}
 
 	public Path getPath(){
-		System.out.println(new File(url).exists());
 		return Paths.get(url);
 	}
 	
@@ -27,7 +26,7 @@ public class MessagingFile {
 	}
 
 	public String getExtension() { 
-		return null;
+		return url.substring(url.lastIndexOf(".") + 1);
 	}
 
 	public String getMimeType() throws IOException {

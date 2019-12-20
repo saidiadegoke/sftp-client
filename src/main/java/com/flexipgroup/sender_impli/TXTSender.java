@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.flexipgroup.sender_client.MessagingFile;
 import com.flexipgroup.sender_client.SenderClient;
+import com.flexipgroup.sender_client.MessagingFile;
 import com.flexipgroup.sender_strategy.SenderStrategy;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -22,12 +23,6 @@ import com.rabbitmq.client.ConnectionFactory;
 public class TXTSender implements SenderStrategy {
 	private  MessagingFile filePath;
 	 private static final Logger LOGGER = Logger.getLogger(SenderClient.class);
-
-	public TXTSender() {}
-	
-	public TXTSender(MessagingFile files) {
-		this.filePath = files;
-	}
 
 
 
