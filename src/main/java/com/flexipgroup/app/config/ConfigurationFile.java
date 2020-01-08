@@ -68,7 +68,7 @@ public class ConfigurationFile {
         SFTP_PASSWORD = ini.get("sftp", "password");
         SFTP_USERNAME = ini.get("sftp", "username");
         SFTP_HOSTNAME = ini.get("sftp",  "host");
-        SFTP_REMOTE_PATH = ini.get("path", "basedir") + File.separatorChar + ini.get("sftp", "remotefilePath");
+        SFTP_REMOTE_PATH = ini.get("path", "basedir") + "/" + ini.get("sftp", "remotefilePath");
         MAIN_POLL_INTERVAL = ini.get("app", "main_poll_interval", int.class);
         BASEPATH = System.getProperty("user.home") + File.separatorChar + ini.get("path", "basepath");
         MAX_FILE_BUF = ini.get("crypto", "MAX_FILE_BUF", int.class);
