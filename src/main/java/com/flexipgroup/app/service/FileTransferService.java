@@ -41,7 +41,7 @@ public class FileTransferService {
 	
 	public void run() {
 		try {
-			testRun();
+			runSFTP();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

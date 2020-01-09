@@ -45,7 +45,8 @@ public class Application {
 				config.READ_FOLDER,
 				config.ERROR_FOLDER,
 				config.ARCHIVE_FOLDER,
-				config.SUCCESS_FOLDER
+				config.SUCCESS_FOLDER,
+				config.RECEIVER_FOLDER,
 		};
 		
 		try {

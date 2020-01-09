@@ -42,6 +42,8 @@ public class RecieverClient extends Thread {
 			if(f.exists()) {
 		  SFTPAgent agent = new SFTPAgent(filePath, new ConfigurationFile()); 
 		  agent.upload(); 
+			} else {
+				System.out.println("Consumed file not found!");
 			}
 			 
 			
