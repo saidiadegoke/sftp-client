@@ -39,7 +39,7 @@ public class Application {
 		//receiver.start();
 		FileLogger Logger = new FileLogger();
 
-		Logger.log("Watch file lannnnn", "info");
+		FileLogger.log("Watch file lannnnn", "info");
 
 		String[] paths = {
 				
@@ -48,7 +48,8 @@ public class Application {
 				config.READ_FOLDER,
 				config.ERROR_FOLDER,
 				config.ARCHIVE_FOLDER,
-				config.SUCCESS_FOLDER
+				config.SUCCESS_FOLDER,
+				config.RECEIVER_FOLDER,
 		};
 		
 //		try {

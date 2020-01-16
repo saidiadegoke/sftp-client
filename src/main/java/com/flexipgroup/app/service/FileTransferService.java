@@ -20,6 +20,7 @@ import com.flexipgroup.app.cipher.CryptoEncrypt;
 import com.flexipgroup.app.cipher.SFTPAgent;
 import com.flexipgroup.app.common.FileUtils;
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.app.log.FileLogger;
 import com.flexipgroup.reciever_client.RecieverClient;
 import com.flexipgroup.sender_client.SenderClient;
 import com.jcraft.jsch.JSchException;
@@ -41,7 +42,7 @@ public class FileTransferService {
 	
 	public void run() {
 		try {
-			testRun();
+			runSFTP();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,6 +99,8 @@ public class FileTransferService {
 		String archiveFile = fileUtils.getArchiveFile();
 		FileManager.moveFile(fileUtils.getDownloadFile(), archiveFile);
 		CryptoEncrypt encryptor = new CryptoEncrypt(config.SECRET_KEY, archiveFile, readFile);
+
+		FileLogger Logger = new FileLogger();
 		
 		ExecutorService executorService = Executors.newFixedThreadPool(2);
 		try {
@@ -114,6 +117,7 @@ public class FileTransferService {
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
+				
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

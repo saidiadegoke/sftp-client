@@ -13,7 +13,6 @@ public class FileLogger {
 	   //instantiated and empty constructor
 	   public FileLogger(){}
 
-	
 	   public static void log(String message, String level) {
 		   switch(level) {
 		   		case "info":

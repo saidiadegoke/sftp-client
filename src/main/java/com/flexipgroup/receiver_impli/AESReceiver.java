@@ -36,7 +36,7 @@ public class AESReceiver implements RecieverStrategy {
 		            out.write(message.getBody());
 
 		              out.close();
-			        System.out.println("I just got the message for that thing = " + file.getUrl());	
+			        System.out.println("I just got a new file = " + file.getUrl());	
 
 		            //System.out.println("I just got the message for that thing = " + out);	
 		            
