@@ -37,7 +37,10 @@ public class Application {
 		faxFolder.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 		//Thread receiver = new RecieverClient();
 		//receiver.start();
-		
+		FileLogger Logger = new FileLogger();
+
+		Logger.log("Watch file lannnnn", "info");
+
 		String[] paths = {
 				
 				
@@ -155,6 +158,8 @@ public class Application {
 			// manage.moveFile( , destinationFile);
 
 			Logger.log("Watch file changes on FileObserver", "error");
+			Logger.log("Watch file lannnnn", "info");
+
 			try {
 				Thread.sleep(config.MAIN_POLL_INTERVAL);
 			} catch (InterruptedException e) {

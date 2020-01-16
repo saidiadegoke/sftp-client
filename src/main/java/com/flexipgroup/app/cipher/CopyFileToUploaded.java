@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.flexipgroup.app.smd.SendMoveDelete;
+import com.jcraft.jsch.Logger;
 
 public class CopyFileToUploaded {
 	
@@ -18,7 +19,7 @@ public class CopyFileToUploaded {
 		int monitor = 0;
 		
 		System.out.println("INITIAL FILE NAME COLLECTION SIZE : "+UploadFileNameCollection.getAll().size());
-		
+
 		for(String fileName : UploadFileNameCollection.getAll()) {
 			
 			File file = new File(uploaddirectoryLocation+File.separator+fileName);
