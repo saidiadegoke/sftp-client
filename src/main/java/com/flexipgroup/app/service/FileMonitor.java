@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.flexipgroup.app.log.FileLogger;
+
 public class FileMonitor {
 	
 	private static void monitorFile(File file) throws IOException, InterruptedException {
@@ -25,7 +27,7 @@ public class FileMonitor {
 			        	System.out.println("File found!");
 			        	Thread.sleep(POLL_INTERVAL);
 		    } else {
-		    	System.out.println("File not found!");
+		    	FileLogger.log("File not found!", "error");
 		    	Thread.sleep(POLL_INTERVAL);
 		    }
 	    }
@@ -37,10 +39,9 @@ public class FileMonitor {
 		try {
 			monitorFile(new File(path));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(), "error");
 		} catch (InterruptedException ie) {
-			ie.printStackTrace();
+			FileLogger.log(ie.toString(), "error");
 		}
 	}
 	

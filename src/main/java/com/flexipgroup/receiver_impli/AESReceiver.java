@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import com.flexipgroup.app.log.FileLogger;
 import com.flexipgroup.reciever_client.RecieverMessagingFile;
 import com.flexipgroup.reciever_strategy.RecieverStrategy;
 import com.rabbitmq.client.Channel;
@@ -42,11 +43,10 @@ public class AESReceiver implements RecieverStrategy {
 		            
 		            
 		        } catch (Exception e) {
-		           e.printStackTrace();
+		        	FileLogger.log("error has occurred", e.toString());
+		         
 		        }
 				  
-
-				
 			  }, consumerTag -> {});
 			  
 		 }
@@ -66,8 +66,7 @@ public class AESReceiver implements RecieverStrategy {
 			channel.queueDeclare("key5000", false, false, false, null);
 			return channel;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(), "error");
 		} catch (TimeoutException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -100,7 +100,6 @@ public class FileTransferService {
 		FileManager.moveFile(fileUtils.getDownloadFile(), archiveFile);
 		CryptoEncrypt encryptor = new CryptoEncrypt(config.SECRET_KEY, archiveFile, readFile);
 
-		FileLogger Logger = new FileLogger();
 		
 		ExecutorService executorService = Executors.newFixedThreadPool(2);
 		try {
@@ -111,15 +110,16 @@ public class FileTransferService {
 			
 			SenderClient sender = new SenderClient(readFile);
 			
-			Thread receiver = new RecieverClient();
-			receiver.start();
+			Thread receive = new RecieverClient();
+			receive.start();
 			
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
-				
+				FileLogger.log(e.toString(),"error");
+
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 			//RecieverClient receiver = new RecieverClient();

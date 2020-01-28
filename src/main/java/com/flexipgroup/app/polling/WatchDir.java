@@ -37,6 +37,8 @@ import java.nio.file.attribute.*;
 import java.io.*;
 import java.util.*;
 
+import com.flexipgroup.app.log.FileLogger;
+
 /**
  * Example to watch a directory (or tree) for changes to files.
  */
@@ -151,8 +153,9 @@ public class WatchDir {
                         if (Files.isDirectory(child, NOFOLLOW_LINKS)) {
                             registerAll(child);
                         }
-                    } catch (IOException x) {
+                    } catch (IOException e) {
                         // ignore to keep sample readbale
+                    	FileLogger.log(e.toString(), "error");
                     }
                 }
             }

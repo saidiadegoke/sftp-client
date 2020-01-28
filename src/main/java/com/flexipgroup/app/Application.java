@@ -37,7 +37,7 @@ public class Application {
 		faxFolder.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 		//Thread receiver = new RecieverClient();
 		//receiver.start();
-		FileLogger Logger = new FileLogger();
+		//FileLogger Logger = new FileLogger();
 
 		FileLogger.log("Watch file lannnnn", "info");
 
@@ -48,8 +48,7 @@ public class Application {
 				config.READ_FOLDER,
 				config.ERROR_FOLDER,
 				config.ARCHIVE_FOLDER,
-				config.SUCCESS_FOLDER,
-				config.RECEIVER_FOLDER,
+				config.SUCCESS_FOLDER
 		};
 		
 //		try {
@@ -154,19 +153,21 @@ public class Application {
 			 * 
 			 */
 			
-			FileLogger Logger = new FileLogger();
-			FileManager manage = new FileManager();
+			//FileLogger Logger = new FileLogger();
+			//FileManager manage = new FileManager();
 			// manage.moveFile( , destinationFile);
 
-			Logger.log("Watch file changes on FileObserver", "error");
-			Logger.log("Watch file lannnnn", "info");
+			FileLogger.log("Watch file changes on FileObserver", "error");
+			FileLogger.log("Watch file lannnnn", "info");
 
 			try {
 				Thread.sleep(config.MAIN_POLL_INTERVAL);
 			} catch (InterruptedException e) {
-				// TODO
+				// TODO 
 				// Log everything happening, especially the errors.
-				e.printStackTrace();
+				
+				FileLogger.log(e.toString(), "error");
+
 			}
 		}
 
