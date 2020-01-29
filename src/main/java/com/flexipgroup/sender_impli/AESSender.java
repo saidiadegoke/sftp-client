@@ -1,19 +1,13 @@
 package com.flexipgroup.sender_impli;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import com.flexipgroup.app.log.FileLogger;
 import com.flexipgroup.sender_client.MessagingFile;
 import com.flexipgroup.sender_client.SenderClient;
 import com.flexipgroup.sender_strategy.SenderStrategy;
@@ -48,8 +42,8 @@ public void execute() throws IOException, TimeoutException {
 
 
 		} catch (EncryptedDocumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			FileLogger.log(e1.toString(),"error");
+
 
 		}
 	}

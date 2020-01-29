@@ -1,11 +1,11 @@
 package com.flexipgroup.sender_client;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
-import org.apache.log4j.*;
+import org.apache.log4j.Logger;
 
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.app.log.FileLogger;
 import com.flexipgroup.sender_context.SenderContext;
 import com.flexipgroup.sender_strategy.SenderStrategy;
 
@@ -29,8 +29,7 @@ public class SenderClient {
 			context.setStrategy(sender);
 			context.execute();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
 		}
 	         
 	}

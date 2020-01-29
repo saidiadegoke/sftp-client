@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.flexipgroup.app.log.FileLogger;
+
 public class FileMonitor {
 	
 	public static void main1(String[] args) {
@@ -12,10 +14,11 @@ public class FileMonitor {
 		try {
 			monitorFile(new File(path));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
+
 		} catch (InterruptedException ie) {
-			ie.printStackTrace();
+			FileLogger.log(ie.toString(),"error");
+
 		}
 	}
 	

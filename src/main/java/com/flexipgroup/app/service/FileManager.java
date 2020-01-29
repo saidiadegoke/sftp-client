@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.app.log.FileLogger;
 
 public class FileManager {
 	
@@ -20,8 +21,8 @@ public class FileManager {
 		try {
 			Files.move(Paths.get(sourceFile), Paths.get(destinationFile));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
+
 		}
 	}
 	
@@ -34,8 +35,8 @@ public class FileManager {
 		try {
 			Files.copy(Paths.get(sourceFile), Paths.get(destinationFile));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
+
 		}
 	}
 	

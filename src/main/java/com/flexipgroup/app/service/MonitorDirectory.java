@@ -33,7 +33,6 @@ public class MonitorDirectory {
 					String fileName = event.context().toString();
 					FileTransferService transfer = new FileTransferService(config.BASEPATH + File.separator + config.DOWNLOAD_FOLDER + File.separator + fileName);
 					transfer.run();
-					System.out.println("File Created:" + fileName);
 				}
 			}
 			valid = watchKey.reset();

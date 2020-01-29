@@ -7,8 +7,8 @@ import java.util.concurrent.TimeoutException;
 import com.flexipgroup.app.cipher.SFTPAgent;
 import com.flexipgroup.app.common.FileUtils;
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.app.log.FileLogger;
 import com.flexipgroup.reciever_context.RecieverContext;
-import com.flexipgroup.reciever_strategy.RecieverStrategy;
 
 
 
@@ -46,13 +46,13 @@ public class RecieverClient extends Thread {
 			
 			System.out.println("File path: " + filePath);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
+
 		} catch (TimeoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
+
 		} catch (Exception e) {
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
 		}
 	}
 }

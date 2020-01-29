@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.ini4j.Wini;
 
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.app.log.FileLogger;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
@@ -95,16 +96,15 @@ public class SFTPAgent {
 			// TODO
 			
 			String remotefilePath = remotePath;
-			System.out.println("REMOTE FILE PATH: "+remotefilePath);
-			System.out.println("FILEPAth from sftpagent : "+filePath);
-			
-			System.out.println("SERVER CONNECTED : "+sftp.isConnected());
+//			System.out.println("REMOTE FILE PATH: "+remotefilePath);
+//			System.out.println("FILEPAth from sftpagent : "+filePath);
+//			
+//			System.out.println("SERVER CONNECTED : "+sftp.isConnected());
 			
 			//Upload.getUpload(filePath, remotefilePath, sftp,FileUploadProgress.getMonitorProgress());
 			
 		} catch (Exception e) {
-			System.out.println("Not sending");
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
 		}
 	}
 	
@@ -123,12 +123,12 @@ public class SFTPAgent {
 			      try {
 			        sftpChannel.cd(basedir);
 			      } catch (SftpException e) {
-			        // No such folder yet:
+						FileLogger.log(e.toString(),"error");
 			    	  try {
 						sftpChannel.mkdir(basedir);
 					} catch (SftpException e3) {
-						// TODO Auto-generated catch block
-						e3.printStackTrace();
+						FileLogger.log(e3.toString(),"error");
+
 					}
 			    	  try {
 						sftpChannel.cd(basedir);
@@ -138,19 +138,19 @@ public class SFTPAgent {
 									try {
 										sftpChannel.cd(path);
 									} catch (SftpException e2) {
-										System.out.println(path);
+										FileLogger.log(e2.toString(),"error");
 										sftpChannel.mkdir(path);
 									}
 								}
 							}
 							//sftpChannel.cd(folder);
 						} catch (SftpException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							FileLogger.log(e1.toString(),"error");
+
 						}
 					} catch (SftpException e3) {
-						// TODO Auto-generated catch block
-						e3.printStackTrace();
+						FileLogger.log(e3.toString(),"error");
+
 					}
 			        
 			        

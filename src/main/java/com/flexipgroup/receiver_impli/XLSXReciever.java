@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import com.flexipgroup.app.log.FileLogger;
 import com.flexipgroup.reciever_client.RecieverMessagingFile;
 import com.flexipgroup.reciever_strategy.RecieverStrategy;
 import com.rabbitmq.client.Channel;
@@ -38,13 +39,13 @@ public class XLSXReciever implements RecieverStrategy{
 		            out.write(message.getBody());
 
 		              out.close();
-			        System.out.println("I just got the message for that thing = " + message.getBody());	
-
-		            System.out.println("I just got the message for that thing = " + out);	
+//			        System.out.println("I just got the message for that thing = " + message.getBody());	
+//
+//		            System.out.println("I just got the message for that thing = " + out);	
 		            
 		            
 		        } catch (Exception e) {
-		           e.printStackTrace();
+					FileLogger.log(e.toString(),"error");
 		        }
 				  
 

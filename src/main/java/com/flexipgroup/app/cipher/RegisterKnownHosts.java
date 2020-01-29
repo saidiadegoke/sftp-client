@@ -60,9 +60,9 @@ public class RegisterKnownHosts {
 			
 		if(exitVal == 0)
 		{
-			System.out.println("Success!");
-			System.out.println(output);
-			System.out.println(count);
+//			System.out.println("Success!");
+//			System.out.println(output);
+//			System.out.println(count);
 			//System.exit(0);
 		}
 		

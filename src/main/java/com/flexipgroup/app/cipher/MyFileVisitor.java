@@ -14,7 +14,6 @@ public class MyFileVisitor implements FileVisitor<Path>
 	@Override
 	public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
 		// TODO Auto-generated method stub
-		System.out.println("About to visit "+ dir);		
 		return FileVisitResult.CONTINUE;
 	}
 
@@ -23,28 +22,26 @@ public class MyFileVisitor implements FileVisitor<Path>
 		// TODO Auto-generated method stub
 		if(!file.endsWith(".DS_Store"))
 		{
-			System.out.println("Currently visiting file "+ file);
-			System.out.println("toString : "+ file.toString());
-			System.out.println("substring :" + file.toString().substring(29));			
+//			System.out.println("Currently visiting file "+ file);
+//			System.out.println("toString : "+ file.toString());
+//			System.out.println("substring :" + file.toString().substring(29));			
 			ufc.add(file.toString());
 			ufnc.add(file.toString().substring(29));
-			System.out.println("FILE SIZE : "+UploadFilesCollection.getAll().size());
-			System.out.println("FILE NAME SIZE : "+UploadFileNameCollection.getAll().size());
+//			System.out.println("FILE SIZE : "+UploadFilesCollection.getAll().size());
+//			System.out.println("FILE NAME SIZE : "+UploadFileNameCollection.getAll().size());
 		}
 		return FileVisitResult.CONTINUE;
 	}
 
 	@Override
 	public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-		// TODO Auto-generated method stub
-		System.err.println("Just visited "+ exc.getMessage());
+//	System.err.println("Just visited "+ exc.getMessage());
 		return FileVisitResult.CONTINUE;
 	}
 
 	@Override
 	public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-		// TODO Auto-generated method stub
-		System.out.println("Just visited "+ dir);
+		//System.out.println("Just visited "+ dir);
 		return FileVisitResult.CONTINUE;
 	}
 								

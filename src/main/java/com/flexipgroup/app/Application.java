@@ -62,15 +62,14 @@ public class Application {
 //		}
 		try {
 			if(config.CREATE_REMOTE_FOLDERS == true) {
-				System.out.println("create remote files");
 				run(paths, config);
 			}
 		} catch (JSchException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
+
 		} catch (SftpException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
+
 		}
 		
 		try (Stream<Path> walk = Files.walk(Paths.get(config.BASEPATH + File.separatorChar + config.DOWNLOAD_FOLDER))) {
@@ -91,7 +90,7 @@ public class Application {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
 		}
 
 		boolean valid = true;

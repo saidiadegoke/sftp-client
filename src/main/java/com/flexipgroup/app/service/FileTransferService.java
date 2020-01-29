@@ -59,36 +59,35 @@ public class FileTransferService {
 		try {
 			encryptor.encrypt();
 		} catch (InvalidKeyException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			FileLogger.log(e1.toString(),"error");
 		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			FileLogger.log(e1.toString(),"error");
+
 		} catch (InvalidKeySpecException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			FileLogger.log(e1.toString(),"error");
+
 		} catch (NoSuchPaddingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			FileLogger.log(e1.toString(),"error");
+
 		} catch (InvalidParameterSpecException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			FileLogger.log(e1.toString(),"error");
+
 		} catch (IllegalBlockSizeException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			FileLogger.log(e1.toString(),"error");
+
 		} catch (BadPaddingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			FileLogger.log(e1.toString(),"error");
+
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			FileLogger.log(e1.toString(),"error");
+
 		}
 		SFTPAgent agent = new SFTPAgent(readFile, config);
 		try {
 			agent.upload();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
+
 		}
 	}
 	
@@ -117,9 +116,6 @@ public class FileTransferService {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				FileLogger.log(e.toString(),"error");
-
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
 			}
 			
 			//RecieverClient receiver = new RecieverClient();
@@ -131,30 +127,30 @@ public class FileTransferService {
 			//executorService.submit(receiver);
 			//executorService.shutdown();
 			
-		} catch (InvalidKeyException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidKeySpecException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (NoSuchPaddingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidParameterSpecException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalBlockSizeException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (BadPaddingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (InvalidKeyException e) {
+			FileLogger.log(e.toString(),"error");
+
+		} catch (NoSuchAlgorithmException e) {
+			FileLogger.log(e.toString(),"error");
+
+		} catch (InvalidKeySpecException e) {
+			FileLogger.log(e.toString(),"error");
+
+		} catch (NoSuchPaddingException e) {
+			FileLogger.log(e.toString(),"error");
+
+		} catch (InvalidParameterSpecException e) {
+			FileLogger.log(e.toString(),"error");
+
+		} catch (IllegalBlockSizeException e) {
+			FileLogger.log(e.toString(),"error");
+
+		} catch (BadPaddingException e) {
+			FileLogger.log(e.toString(),"error");
+
+		} catch (IOException e) {
+			FileLogger.log(e.toString(),"error");
+
 		}
 		
 		

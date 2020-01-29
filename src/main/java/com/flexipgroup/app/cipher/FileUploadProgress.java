@@ -16,10 +16,10 @@ public class FileUploadProgress {
 			@Override
 			public void init(int op, String src, String dest, long max) {
 				this.max = max;
-				System.out.println("\n Starting...");
-				System.out.println("Local File : "+src);  // Origin destination
-				System.out.println("Remote Location : " +dest); // Destination path
-				System.out.println(max);  //Total filesize						
+//				System.out.println("\n Starting...");
+//				System.out.println("Local File : "+src);  // Origin destination
+//				System.out.println("Remote Location : " +dest); // Destination path
+//				System.out.println(max);  //Total filesize						
 			}
 
 			@Override
@@ -30,9 +30,9 @@ public class FileUploadProgress {
 				if(percentNow > this.percent) {
 					this.percent = percentNow;
 					
-					System.out.print("\nProgress : " + this.percent +"%    ");
-					System.out.printf("%-5s",this.count/megabytes + " mb / "); //Progress in bytes from the total
-					System.out.printf("%-15s",max/megabytes + " mb ");
+//					System.out.print("\nProgress : " + this.percent +"%    ");
+//					System.out.printf("%-5s",this.count/megabytes + " mb / "); //Progress in bytes from the total
+//					System.out.printf("%-15s",max/megabytes + " mb ");
 					
 				}							
 				return true;
@@ -41,9 +41,9 @@ public class FileUploadProgress {
 
 			@Override
 			public void end() {
-				System.out.println(this.percent +  "%");
-				System.out.println(max);
-				System.out.println(this.count);	
+//				System.out.println(this.percent +  "%");
+//				System.out.println(max);
+//				System.out.println(this.count);	
 				if(this.percent == 100)
 				{
 					SendMoveDelete.sendNotification = true;

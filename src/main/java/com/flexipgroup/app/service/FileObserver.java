@@ -14,6 +14,7 @@ import java.nio.file.WatchService;
 import org.ini4j.Wini;
 
 import com.flexipgroup.app.cipher.MyFileVisitor;
+import com.flexipgroup.app.log.FileLogger;
 
 public class FileObserver {
 	
@@ -64,10 +65,12 @@ public class FileObserver {
 		
 		}catch(IOException ioe)
 		{
-			
+			FileLogger.log(ioe.toString(),"error");
+
 		}catch(InterruptedException in)
 		{
-			
+			FileLogger.log(in.toString(),"error");
+
 		}
 	
 	}

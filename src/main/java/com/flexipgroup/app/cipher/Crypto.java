@@ -29,6 +29,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.app.log.FileLogger;
 
 /**
  * 
@@ -327,35 +328,35 @@ public class Crypto
       }
       catch (InvalidKeyException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (NoSuchAlgorithmException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (InvalidKeySpecException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (NoSuchPaddingException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (InvalidParameterSpecException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (IllegalBlockSizeException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (BadPaddingException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (UnsupportedEncodingException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
 
         /*
@@ -368,15 +369,15 @@ public class Crypto
       }
       catch (IllegalBlockSizeException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (BadPaddingException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (IOException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
 
 
@@ -390,27 +391,27 @@ public class Crypto
       }
       catch (InvalidKeyException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (NoSuchAlgorithmException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (InvalidKeySpecException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (NoSuchPaddingException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (InvalidAlgorithmParameterException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (DecoderException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
 
     /*
@@ -423,15 +424,15 @@ public class Crypto
       }
       catch (IllegalBlockSizeException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (BadPaddingException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
       catch (IOException e)
       {
-          e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
       }
    }
 

@@ -5,6 +5,7 @@ import java.io.File;
 import org.ini4j.Wini;
 
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.app.log.FileLogger;
 import com.flexipgroup.app.service.FileObserver;
 import com.flexipgroup.app.smd.SendMoveDelete;
 import com.jcraft.jsch.ChannelSftp;
@@ -24,8 +25,8 @@ public class RunEnviron {
 			String fileName = UploadFileNameCollection.get(i);
 			ChannelSftp sftp = SFTPAgent.connect();
 			
-			System.out.println("sending file "+file);
-			System.out.println("sending filename "+fileName);
+//			System.out.println("sending file "+file);
+//			System.out.println("sending filename "+fileName);
 			
 			//send method
 			SFTPAgent.send(sftp, file);
@@ -58,13 +59,13 @@ public class RunEnviron {
 					SFTPAgent sftp = new SFTPAgent("", new ConfigurationFile());
 					sftp.connect();
 				} catch (JSchException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					FileLogger.log(e.toString(),"error");
+
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					FileLogger.log(e.toString(),"error");
+
 				}
-				System.out.println("Status : Connection established");
+//				System.out.println("Status : Connection established");
 			}
 		};
 		
@@ -79,7 +80,8 @@ public class RunEnviron {
 					new FileObserver();					
 				}catch(InterruptedException ie)
 				{
-					
+					FileLogger.log(ie.toString(),"error");
+	
 				}
 			}
 		};
@@ -101,18 +103,19 @@ public class RunEnviron {
 							try {
 								runsend(ufc,ufnc);
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								FileLogger.log(e.toString(),"error");
+
 							}
 						}
 						Thread.sleep(5000);
 					}										
 				}catch(InterruptedException ie)
 				{
-					
+					FileLogger.log(ie.toString(),"error");
+
 				}catch(IndexOutOfBoundsException iob)
 				{
-					System.out.println("empty array");
+					FileLogger.log(iob.toString(),"error");
 				}
 //				runsend(ini,sftp,ufc,ufnc);
 			}

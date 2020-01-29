@@ -185,9 +185,7 @@ public class CryptoEncrypt
         fout = new FileOutputStream (output);
         fout.write(Hex.encodeHexString(mInitVec).getBytes());
         fout.write(Hex.encodeHexString(mSalt).getBytes());
-        System.out.println(input.getAbsolutePath().substring(input.getAbsolutePath().lastIndexOf(".")+1));
         
-        //System.out.println(input.getAbsolutePath().lastIndexOf(".")+1);
 
         System.out.println("Write the nInitVen to stdout: " + Hex.encodeHexString(mInitVec));
         

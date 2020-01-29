@@ -8,6 +8,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.flexipgroup.app.log.FileLogger;
+
 public class SecretKeyGen {
 	
 	private static SecretKey generateSecretKey1 ()
@@ -28,7 +30,7 @@ public class SecretKeyGen {
     */
    keyGen = KeyGenerator.getInstance("AES");
   } catch (NoSuchAlgorithmException e) {
-   e.printStackTrace();
+		FileLogger.log(e.toString(),"error");
   }
 
   /* Initializes this key generator for key size to 256. */
@@ -43,7 +45,7 @@ public class SecretKeyGen {
  public String run() {
   SecretKey secretKey = generateSecretKey();
   String encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-  System.out.println(encodedKey);
+ // System.out.println(encodedKey);
   return encodedKey;
   
  }

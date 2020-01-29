@@ -33,7 +33,6 @@ public class CopyFileToUploaded {
 				System.out.println(fileName + " moved successfully");
 			}
 		}
-		System.out.println("...Deleting files from collection");
 		removeFromList ();
 		
 	}

@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.flexipgroup.app.cipher.CopyFileToUploaded;
 import com.flexipgroup.app.cipher.UploadFileNameCollection;
+import com.flexipgroup.app.log.FileLogger;
 
 public class SendMoveDelete {
 	
@@ -46,17 +47,20 @@ public class SendMoveDelete {
 		//send method
 		while(true) {
 			try {
-				System.out.println("SEND STATUS :" +send());
-
-				System.out.println("UPLOAD FILE LOCATION : "+uploadfileLocation);
-				System.out.println("UPLOADED LOCATION : "+uploadedLocation);
-				System.out.println("UPLOAD FILE NAME SIZE : "+UploadFileNameCollection.getAll().size());
+//				System.out.println("SEND STATUS :" +send());
+//
+//				System.out.println("UPLOAD FILE LOCATION : "+uploadfileLocation);
+//				System.out.println("UPLOADED LOCATION : "+uploadedLocation);
+//				System.out.println("UPLOAD FILE NAME SIZE : "+UploadFileNameCollection.getAll().size());
 				
 				CopyFileToUploaded.copyFile(uploadfileLocation, uploadedLocation);
 
 				Thread.sleep(5000);
 				break;
-			}catch(InterruptedException io) {}
+			}catch(InterruptedException io) {
+				FileLogger.log(io.toString(),"error");
+
+			}
 				
 		}
 	}

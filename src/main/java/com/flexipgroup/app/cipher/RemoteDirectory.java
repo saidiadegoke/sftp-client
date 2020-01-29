@@ -19,7 +19,7 @@ public class RemoteDirectory {
 		Vector<?> filelist = sftp.ls(remoteDirectory);
 		for(int i = 0; i < filelist.size(); i++)
 		{
-			System.out.println(filelist.get(i).toString());
+			//System.out.println(filelist.get(i).toString());
 		}
 		
 		List <String>flNmLst = new ArrayList<String>();
@@ -33,7 +33,7 @@ public class RemoteDirectory {
 			if(!attr.isDir() && !attr.isLink())
 			{
 				flNmLst.add(ent.getFilename());							
-				System.out.println("File : " + ent.getFilename());												
+				//System.out.println("File : " + ent.getFilename());												
 			}												
 		}
 		return ent.getFilename();

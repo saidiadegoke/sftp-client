@@ -2,6 +2,7 @@ package com.flexipgroup.app.cipher;
 
 import java.io.File;
 
+import com.flexipgroup.app.log.FileLogger;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.SftpProgressMonitor;
 
@@ -14,15 +15,15 @@ public class Upload {
 				if(!(file == ""  || file.isEmpty()) && !(remoteDirectory == "" || remoteDirectory.isEmpty())) {									
 					
 					//list remote directory
-					System.out.println(RemoteDirectory.getListRemoteDirectory(sftp, remoteDirectory));
+					//System.out.println(RemoteDirectory.getListRemoteDirectory(sftp, remoteDirectory));
 					String files = System.getProperty("user.home") + File.separator + "ubaclient/upload/attachment.svg";
-					System.out.println("SFTP : "+sftp.isConnected());
+					//System.out.println("SFTP : "+sftp.isConnected());
 					sftp.put(file, remoteDirectory, progress);				
 				}	
 				
 			}catch(Exception e) {
-				System.out.println("Upload file not found: "+ file);
-				e.printStackTrace();
+				FileLogger.log(e.toString(),"error");
+
 			}
 			
 		}
@@ -34,13 +35,13 @@ public class Upload {
 				if(!(file == ""  || file.isEmpty()) && !(remoteDirectory == "" || remoteDirectory.isEmpty())) {									
 					
 					//list remote directory
-					System.out.println(RemoteDirectory.getListRemoteDirectory(sftp, remoteDirectory));
+					//System.out.println(RemoteDirectory.getListRemoteDirectory(sftp, remoteDirectory));
 					
 					sftp.put(file, remoteDirectory);				
 				}	
 				
 			}catch(Exception e) {
-				e.printStackTrace();
+				FileLogger.log(e.toString(),"error");
 			}
 			
 		}

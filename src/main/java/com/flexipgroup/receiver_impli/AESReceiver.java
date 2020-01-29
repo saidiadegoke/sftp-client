@@ -37,7 +37,7 @@ public class AESReceiver implements RecieverStrategy {
 		            out.write(message.getBody());
 
 		              out.close();
-			        System.out.println("I just got a new file = " + file.getUrl());	
+			        //System.out.println("I just got a new file = " + file.getUrl());	
 
 		            //System.out.println("I just got the message for that thing = " + out);	
 		            
@@ -68,8 +68,7 @@ public class AESReceiver implements RecieverStrategy {
 		} catch (IOException e) {
 			FileLogger.log(e.toString(), "error");
 		} catch (TimeoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileLogger.log(e.toString(),"error");
 		}
 		
 	     
