@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.TimeoutException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -21,7 +22,7 @@ import com.rabbitmq.client.ConnectionFactory;
 
 public class XLSXSender implements SenderStrategy {
 	private  MessagingFile files;
-	 private static final Logger LOGGER = Logger.getLogger(SenderClient.class);
+	 private static final Logger LOGGER = LogManager.getLogger(SenderClient.class);
 
 	public XLSXSender() {}
 	

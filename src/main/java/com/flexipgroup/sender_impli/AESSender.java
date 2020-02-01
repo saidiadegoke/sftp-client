@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.concurrent.TimeoutException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -24,7 +24,7 @@ import com.rabbitmq.client.MessageProperties;
 public class AESSender implements SenderStrategy {
 	private  MessagingFile file;
 	//private static final String TASK_QUEUE_NAME = "task_queue";
-	private static final Logger LOGGER = Logger.getLogger(SenderClient.class);
+	private static final Logger LOGGER = LogManager.getLogger(SenderClient.class);
 	
 	public AESSender(MessagingFile file) {
 		this.file = file;

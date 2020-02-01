@@ -3,7 +3,7 @@ package com.flexipgroup.sender_client;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import com.flexipgroup.sender_context.SenderContext;
 import com.flexipgroup.sender_strategy.SenderStrategy;
@@ -11,7 +11,7 @@ import com.flexipgroup.sender_strategy.SenderStrategy;
 
 public class SenderClient {
 	 String filePath;
-	 private static final Logger LOGGER = Logger.getLogger(SenderClient.class);
+	 private static final Logger LOGGER = LogManager.getLogger(SenderClient.class);
 	 
 	public SenderClient(String filePath) {
 		this.filePath = filePath;

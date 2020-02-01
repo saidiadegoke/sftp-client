@@ -1,13 +1,15 @@
 package com.flexipgroup.app.log;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.flexipgroup.app.Application;
 
 public class FileLogger {
 	
 	   //create an object of FileLogger
-	 private static final Logger instance = Logger.getLogger(Application.class);
+	 //private static final Logger instance = Logger.getLogger(Application.class);
+	 private static final Logger instance = LogManager.getLogger(Application.class);
 
 	 //make the constructor private so that this class cannot be
 	   //instantiated and empty constructor
