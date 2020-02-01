@@ -1,6 +1,10 @@
 package com.flexipgroup.app.common;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -21,6 +25,15 @@ public class FileUtils {
 		this.config = new ConfigurationFile();
 	}
 	
+	public static byte[] fileToBytes(String filePath) {
+		try {
+			return Files.readAllBytes(Paths.get(filePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public String getReadFile() {
 		
 		File f = new File(fileName);
@@ -34,11 +47,12 @@ public class FileUtils {
 	}
 	
 	public String getDynamicReadFile() {
-		String ext = config.RECEIVER_EXTENSION;
+		String rext = config.RECEIVER_EXTENSION;
+		String ext = fileName.substring(fileName.lastIndexOf(".")) + "." + rext;
 		LocalDateTime date = LocalDateTime.now();
 		ZoneId zoneId = ZoneId.systemDefault();
 		long epoch = date.atZone(zoneId).toEpochSecond();
-		return config.BASEPATH + File.separator + config.READ_FOLDER + File.separator + config.CUSTOMER_ID + "-payments-" + epoch + "." + ext;
+		return config.BASEPATH + File.separator + config.READ_FOLDER + File.separator + config.CUSTOMER_ID + "-payments-" + epoch + ext;
 	}
 	
 	public String getDownloadFile() {
@@ -52,14 +66,14 @@ public class FileUtils {
 		LocalDateTime date = LocalDateTime.now();
 		ZoneId zoneId = ZoneId.systemDefault();
 		long epoch = date.atZone(zoneId).toEpochSecond();
-		String archiveFile = config.BASEPATH + File.separator + config.ARCHIVE_FOLDER + File.separator + config.CUSTOMER_ID + "-payments-" + epoch + f.getName();
+		String archiveFile = config.BASEPATH + File.separator + config.ARCHIVE_FOLDER + File.separator + config.CUSTOMER_ID + "-payments-" + epoch + ext;
 
 		return archiveFile;
 	}
 	
 	public String getReceiverFile() {
 		//ConfigurationFile config = new ConfigurationFile();
-		String ext = config.RECEIVER_EXTENSION;
+		String ext = config.FILE_EXTENSION + "." + config.RECEIVER_EXTENSION;
 		LocalDateTime date = LocalDateTime.now();
 		ZoneId zoneId = ZoneId.systemDefault();
 		long epoch = date.atZone(zoneId).toEpochSecond();

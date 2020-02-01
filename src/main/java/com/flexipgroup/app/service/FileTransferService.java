@@ -20,6 +20,8 @@ import com.flexipgroup.app.cipher.CryptoEncrypt;
 import com.flexipgroup.app.cipher.SFTPAgent;
 import com.flexipgroup.app.common.FileUtils;
 import com.flexipgroup.app.config.ConfigurationFile;
+import com.flexipgroup.app.rabbitmq.Receiver;
+import com.flexipgroup.app.rabbitmq.Sender;
 import com.flexipgroup.reciever_client.RecieverClient;
 import com.flexipgroup.sender_client.SenderClient;
 import com.jcraft.jsch.JSchException;
@@ -40,8 +42,13 @@ public class FileTransferService {
 	}
 	
 	public void run() {
+		ConfigurationFile config = new ConfigurationFile();
+		Receiver recvr = new Receiver(config);
 		try {
-			runSFTP();
+			recvr.consume();
+			//runSFTP();
+			//testRun();
+			execute();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,6 +95,31 @@ public class FileTransferService {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	public void execute() throws Exception {
+		ConfigurationFile config = new ConfigurationFile();
+		FileUtils fileUtils = new FileUtils(filePath);
+		String readFile = fileUtils.getDynamicReadFile();
+		String archiveFile = fileUtils.getArchiveFile();
+		FileManager.moveFile(fileUtils.getDownloadFile(), archiveFile);
+		CryptoEncrypt encryptor = new CryptoEncrypt(config.SECRET_KEY, archiveFile, readFile);
+		
+		//ExecutorService executorService = Executors.newFixedThreadPool(2);
+	
+		try {
+			
+			encryptor.encrypt();
+			//SFTPAgent agent = new SFTPAgent(readFile, config);
+			Sender sender = new Sender(readFile, config.ROUTING_ID);
+			sender.send();
+			//sender.setName("sender");
+			//sender.run();
+			//sender.join();
+			
+		} catch(Exception e) {
+			
 		}
 	}
 	

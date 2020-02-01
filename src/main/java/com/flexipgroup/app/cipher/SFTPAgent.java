@@ -38,8 +38,8 @@ public class SFTPAgent {
 	
 	
 	
-	public static ChannelSftp connect() throws Exception {
-		
+	public static ChannelSftp connect() {
+		try {
 		String knownHosts = System.getProperty("user.home") + File.separatorChar + ".ssh/known_hosts";
 		
 		JSch jsch = new JSch();
@@ -51,11 +51,15 @@ public class SFTPAgent {
 		session.connect();
 		System.out.println(session.isConnected());
 
-		return (ChannelSftp) session.openChannel("sftp");		
-
+		return (ChannelSftp) session.openChannel("sftp");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
-	public ChannelSftp setupJsch() throws JSchException {
+	public ChannelSftp setupJsch() {
+		try {
 	    JSch jsch = new JSch();
 	    String knownHosts = System.getProperty("user.home") + File.separatorChar + ".ssh/known_hosts";
 	    jsch.setKnownHosts(knownHosts);
@@ -71,23 +75,33 @@ public class SFTPAgent {
 	    jschSession.setPassword(password);
 	    jschSession.connect();
 	    return (ChannelSftp) jschSession.openChannel("sftp");
+		} catch(JSchException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void upload() throws Exception {
 		//RegisterKnownHosts.getInstance(remoteHost);
 	    ChannelSftp channelSftp = setupJsch();
-	    channelSftp.connect();
-	    
-	    File f = new File(filePath);
-	  
-	    //String remoteDir = remotePath + File.separator + "upload" + File.separator + f.getName();
-	    String remoteDir = remotePath + "/" + "upload" + "/" + f.getName();
-	    //prepareUpload(channelSftp, remoteDir, false);
-	   
-	    System.out.println(remoteDir);
-	    channelSftp.put(filePath, remoteDir);
-	  
-	    channelSftp.exit();
+	    if(channelSftp != null) {
+	    	try {
+		    channelSftp.connect();
+		    
+		    File f = new File(filePath);
+		  
+		    //String remoteDir = remotePath + File.separator + "upload" + File.separator + f.getName();
+		    String remoteDir = remotePath + "/" + "upload" + "/" + f.getName();
+		    //prepareUpload(channelSftp, remoteDir, false);
+		   
+		    System.out.println(remoteDir);
+		    channelSftp.put(filePath, remoteDir);
+		  
+		    channelSftp.exit();
+	    	} catch(Exception e) {
+	    		e.printStackTrace();
+	    	}
+	    }
 	}
 	
 	public static void send(ChannelSftp sftp, String filePath) {

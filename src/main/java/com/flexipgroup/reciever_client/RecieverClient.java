@@ -19,7 +19,7 @@ public class RecieverClient extends Thread {
 
 	public RecieverClient() {
 		//this.filePath = filePath;
-		FileUtils fileUtils = new FileUtils(filePath);
+		FileUtils fileUtils = new FileUtils();
 		this.filePath = fileUtils.getReceiverFile();
 	}
 	

@@ -57,9 +57,6 @@ public class RunEnviron {
 				try {
 					SFTPAgent sftp = new SFTPAgent("", new ConfigurationFile());
 					sftp.connect();
-				} catch (JSchException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

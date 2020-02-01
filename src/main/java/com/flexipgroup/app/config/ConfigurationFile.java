@@ -48,6 +48,7 @@ public class ConfigurationFile {
 	public String RECEIVER_FOLDER;
 	public String RECEIVER_EXTENSION;
 	public String UPLOAD_FOLDER;
+	public String ROUTING_ID;
     
 	public ConfigurationFile() {
 		try {
@@ -91,7 +92,8 @@ public class ConfigurationFile {
         CREATE_REMOTE_FOLDERS = ini.get("app", "createRemoteFolders", boolean.class);
         FILE_EXTENSION = ini.get("app", "fileExtension");
         RECEIVER_FOLDER = ini.get("path", "receiver");
-        RECEIVER_EXTENSION = FILE_EXTENSION + "." + ini.get("app", "receiverExtension");
+        RECEIVER_EXTENSION = ini.get("app", "receiverExtension");
+        ROUTING_ID = ini.get("app", "routingId");
 	}
 
 }
